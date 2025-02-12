@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .player-container {
+      margin-top: 10px;
+      text-align: center;
+      border: 2px solid #444;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #222;
+      width: 300px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .file-input {
+      margin-bottom: 15px;
+      background-color: #444;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .file-input:hover {
+      background-color: #555;
+    }
+
+    .track-list {
+      margin-top: 20px;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .track-list li {
+      padding: 10px;
+      background-color: #333;
+      margin: 5px 0;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .track-list li:hover {
+      background-color: #444;
+    }
+
+    .controls {
+      margin-top: 15px;
+    }
+
+    .button {
+      background-color: #444;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button:hover {
+      background-color: #555;
+    }
+
+    .volume-control {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .track-info {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    /* Hint Box Styling */
+    .hint-box {
+      background-color: #333;
+      color: #f1f1f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .hint-box ul {
+      padding-left: 20px;
+    }
+
+    .hint-box li {
+      margin-bottom: 5px;
+    }
+
+    .hint-box strong {
+      color: #FFD700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="player-container">
+    <h1>Music Player</h1>
+    
+    <script type='text/javascript' src='//slushhelmetmirth.com/39/2a/0d/392a0d28346a0e19cd71e87eccfdecf0.js'></script>
+
+    <!-- Hint Box -->
+    <div class="hint-box">
+      <strong>How to Use:</strong>
+      <ul>
+        <li><strong>Step 1:</strong> Click on the "Choose Files" button to select audio files from your device.</li>
+        <li><strong>Step 2:</strong> After selecting files, they will appear in the list below.</li>
+        <li><strong>Step 3:</strong> Click on any file name in the list to play the music.</li>
+        <li><strong>Step 4:</strong> Adjust the volume using the volume slider.</li>
+        <li><strong>Step 5:</strong> Click the "Stop" button to stop the music and reset.</li>
+      </ul>
+    </div>
+
+    <input type="file" id="file-input" class="file-input" multiple accept="audio/*">
+    
+    <ul id="track-list" class="track-list"></ul>
+
+    <audio id="audio-player" controls>
+      Your browser does not support the audio element.
+    </audio>
+
+    <div class="controls">
+      <button id="stopBtn" class="button">Stop</button>
+    </div>
+
+    <input type="range" id="volumeSlider" class="volume-control" min="0" max="1" step="0.01" value="0.5">
+
+    <div class="track-info">
+      <p id="track-title">Select a track to play</p>
+      <p id="volume-info">Volume: 50%</p>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('file-input');
+    const trackList = document.getElementById('track-list');
+    const audioPlayer = document.getElementById('audio-player');
+    const stopBtn = document.getElementById('stopBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeInfo = document.getElementById('volume-info');
+    const trackTitle = document.getElementById('track-title');
+
+    let tracks = [];
+
+    // Handle file input change (user selects files)
+    fileInput.addEventListener('change', function() {
+      const files = fileInput.files;
+      tracks = [];
+      trackList.innerHTML = ''; // Clear the track list
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        tracks.push(file);
+        const listItem = document.createElement('li');
+        listItem.textContent = file.name;
+        listItem.addEventListener('click', () => playTrack(file));
+        trackList.appendChild(listItem);
+      }
+    });
+
+    // Play selected track
+    function playTrack(file) {
+      const fileURL = URL.createObjectURL(file);
+      audioPlayer.src = fileURL;
+      audioPlayer.play();
+      trackTitle.textContent = 'Now Playing: ' + file.name;
+    }
+
+    // Stop functionality
+    stopBtn.addEventListener('click', function() {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      trackTitle.textContent = 'Select a track to play';
+    });
+
+    // Volume control functionality
+    volumeSlider.addEventListener('input', function() {
+      audioPlayer.volume = volumeSlider.value;
+      volumeInfo.textContent = Math.round(audioPlayer.volume * 100) + '%';
+    });
+  </script>
+
+<script type='text/javascript' src='//slushhelmetmirth.com/a6/aa/f0/a6aaf0870de26307bc3abe2c99b32a5d.js'></script>
+
+</body>
+</html>
