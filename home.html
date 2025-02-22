@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #2b1907;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: top;
+        height: 100vh;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 400px;
+        background: #3d260e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      .profile {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 10px;
+      }
+
+      .profile img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      .profile h3 {
+        margin: 0;
+      }
+
+      .balance-card {
+        background: #ffe7a4;
+        color: #8b0000;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .balance-card i {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: red;
+        cursor: pointer;
+      }
+
+      .referral-section {
+        background: #5a3a1c;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .referral-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f4e1b4;
+        padding: 10px;
+        border-radius: 5px;
+        color: #d9534f;
+        font-weight: bold;
+      }
+
+      .copy-btn {
+        background: #ffb347;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .activation-container {
+        background: #ffcc00;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        background: #007784;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #005f66;
+      }
+
+      .tasks-container {
+        background: #005f66;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .tasks-container ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .tasks-container li {
+        background: #ffcc00;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .task-btn {
+        background: #28a745;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .task-btn:hover {
+        background: #218838;
+      }
+
+      /* Toast Styling */
+      #toast {
+        visibility: hidden;
+        min-width: 250px;
+        background: #333;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 5px;
+        z-index: 1;
+      }
+
+      #toast.show {
+        visibility: visible;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      @keyframes fadein {
+        from {
+          bottom: 20px;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 20px;
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile">
+        <img
+          src="https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
+          alt="Profile"
+        />
+        <h3>Hello 👋 <span id="username"></span></h3>
+      </div>
+
+      <div class="balance-card">
+        <h4>Account Balance</h4>
+        <h2>₦<span id="balance">500</span></h2>
+        <i class="fas fa-wallet"></i>
+      </div>
+
+      <div class="referral-section">
+        <h4>Earn ₦250 for each registered invite</h4>
+        <p>Earn by inviting a friend with your referral link</p>
+        <div class="referral-link">
+          <span id="referralLink">https://remapay.com/signup?ref=</span>
+          <button class="copy-btn" id="copyBtn">Copy</button>
+        </div>
+      </div>
+
+      <div class="activation-container">
+        <p>Activate your account to start performing tasks and withdraw</p>
+        <div class="buttons">
+          <button id="activateBtn">Activate</button>
+          <button id="withdrawBtn">Withdraw</button>
+        </div>
+      </div>
+
+      <div class="tasks-container">
+        <h2>Perform tasks and get ₦2,000 for each task</h2>
+        <p class="update-date">
+          This task was updated on <span id="currentDate"></span>
+        </p>
+
+        <ul id="taskList">
+          <li>
+            1) Follow on Facebook <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            2) Follow on Twitter <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            3) Like and repost on Twitter
+            <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            4) Subscribe on YouTube <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            5) Join Telegram Group <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            6) Follow on Instagram <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            7) Like a Facebook Post <button class="task-btn">Click Here</button>
+          </li>
+          <li>8) Share a Tweet <button class="task-btn">Click Here</button></li>
+          <li>
+            9) Follow a LinkedIn Page
+            <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            10) Share a YouTube Video
+            <button class="task-btn">Click Here</button>
+          </li>
+          <li>
+            11) Review a Product <button class="task-btn">Click Here</button>
+          </li>
+          <li>12) Rate an App <button class="task-btn">Click Here</button></li>
+          <li>
+            13) Join a WhatsApp Group
+            <button class="task-btn">Click Here</button>
+          </li>
+        </ul>
+      </div>
+
+      <div id="toast">
+        You can't perform any task because you haven't activated your account
+      </div>
+    </div>
+
+    <script>
+      // Retrieve username from localStorage
+      const username = localStorage.getItem("username") || "User";
+      document.getElementById("username").innerText = username;
+
+      // Retrieve balance from localStorage or set default ₦100
+      let balance = localStorage.getItem("balance")
+        ? parseInt(localStorage.getItem("balance"))
+        : 500;
+      document.getElementById("balance").innerText = balance;
+
+      // Set referral link with username
+      const referralLink = `https://blueone.com/signup?ref=${username}`;
+      document.getElementById("referralLink").innerText = referralLink;
+
+      // Copy referral link and update balance
+      document.getElementById("copyBtn").addEventListener("click", () => {
+        navigator.clipboard
+          .writeText(referralLink)
+          .then(() => {
+            alert("Referral link copied!");
+
+            // Add ₦10 to balance
+            balance += 10;
+            document.getElementById("balance").innerText = balance;
+
+            // Save updated balance to localStorage
+            localStorage.setItem("balance", balance);
+          })
+          .catch((err) => {
+            alert("Failed to copy link.");
+          });
+      });
+    </script>
+    <script>
+      // Set current date
+      document.getElementById("currentDate").innerText =
+        new Date().toLocaleDateString();
+
+      // Prevent task clicks if not activated
+      document.querySelectorAll(".task-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          showToast(
+            "You can't perform any task because you haven't activated your account"
+          );
+        });
+      });
+
+      // Show toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+
+      // Redirect to activation page
+      document.getElementById("activateBtn").addEventListener("click", () => {
+        window.location.href = "activate.html";
+      });
+    </script>
+    <script>
+      document
+        .getElementById("withdrawBtn")
+        .addEventListener("click", function () {
+          showToast("Unable to initiate a withdrawal: Account not activated");
+        });
+    </script>
+    <script
+      type="text/javascript"
+      src="//slushhelmetmirth.com/39/2a/0d/392a0d28346a0e19cd71e87eccfdecf0.js"
+    ></script>
+  </body>
+</html>
