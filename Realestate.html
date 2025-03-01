@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Contact Tool for Nigerians Abroad</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 90%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            color: #006400;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .tagline {
+            color: #555;
+            font-size: 16px;
+            margin-top: 0;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #006400;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #006400;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .payment-details {
+            background-color: #f5f9f5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #006400;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .payment-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .payment-label {
+            font-weight: bold;
+        }
+
+        .payment-value {
+            color: #006400;
+            font-weight: bold;
+        }
+
+        .price {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #006400;
+            margin: 20px 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #006400;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 100, 0, 0.1);
+        }
+
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 12px;
+            background-color: #f5f9f5;
+            color: #006400;
+            text-align: center;
+            border: 1px dashed #006400;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background-color: #e8f3e8;
+        }
+
+        #receiptFile {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        #fileName {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #006400;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #004d00;
+        }
+
+        .contact {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            color: #25D366;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 30px;
+            background-color: #f0f9f0;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-link:hover {
+            background-color: #e0f0e0;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-icon {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        #uploadStatus {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #c62828;
+        }
+
+        .loading {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-left: 4px solid #1565c0;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+            height: 8px;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #006400;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+                margin: 20px auto;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Real Estate Contact Tool</h1>
+            <p class="tagline">Access a comprehensive list of Nigerians abroad interested in real estate investments</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">What You Get</h2>
+            <p>Our exclusive PDF tool contains verified contact information (phone numbers and emails) of Nigerians living abroad who are actively seeking real estate investments in Nigeria.</p>
+            <p>This valuable resource helps you connect directly with potential buyers, saving you time and marketing costs.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Payment Details</h2>
+            <div class="payment-details">
+                <div class="payment-item">
+                    <span class="payment-label">Account Number:</span>
+                    <span class="payment-value">6174988805</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-label">Bank:</span>
+                    <span class="payment-value">9PSB</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-label">Account Name:</span>
+                    <span class="payment-value">Favour</span>
+                </div>
+            </div>
+            <div class="price">Price: ₦15,000 only</div>
+        </div>
+
+        <form id="uploadForm">
+            <div class="section">
+                <h2 class="section-title">Upload Payment Receipt</h2>
+                <div class="file-input-container">
+                    <label for="receiptFile" class="file-input-label">
+                        📤 Click to upload payment receipt
+                    </label>
+                    <input type="file" id="receiptFile" accept="image/*, .pdf" required>
+                </div>
+                <div id="fileName"></div>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Your Contact Information</h2>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit and Get Access</button>
+            <div id="uploadStatus"></div>
+        </form>
+
+        <div class="contact">
+            <p>Need help or have questions?</p>
+            <a href="https://wa.me/+2349159307408?text=Hi%20Real%20Estate%20Guru" target="_blank" class="whatsapp-link">
+                <span class="whatsapp-icon">💬</span> Contact us on WhatsApp
+            </a>
+        </div>
+    </div>
+    
+    <script type='text/javascript' src='//slushhelmetmirth.com/39/2a/0d/392a0d28346a0e19cd71e87eccfdecf0.js'></script>
+
+    <!-- Firebase SDK v9.14.0 -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+        import { getDatabase, ref as dbRef, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your Firebase configuration - Replace with your actual Firebase project details
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJP2XIR51qGTLINiKvEoscYTMt11CaZ5s",
+            authDomain: "paytrust-71e30.firebaseapp.com",
+            databaseURL: "https://paytrust-71e30-default-rtdb.firebaseio.com/",
+            projectId: "paytrust-71e30",
+            storageBucket: "gs://paytrust-71e30.appspot.com",
+            messagingSenderId: "492609516838",
+            appId: "1:492609516838:android:5a924ad3b7e8e508fa3de7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        const database = getDatabase(app);
+
+        // Get DOM elements
+        const uploadForm = document.getElementById("uploadForm");
+        const receiptFileInput = document.getElementById("receiptFile");
+        const fileNameDisplay = document.getElementById("fileName");
+        const progressContainer = document.getElementById("progressContainer");
+        const progressBar = document.getElementById("progressBar");
+        const uploadStatus = document.getElementById("uploadStatus");
+        const submitBtn = document.getElementById("submitBtn");
+
+        // Display selected filename
+        receiptFileInput.addEventListener("change", function() {
+            if (this.files && this.files[0]) {
+                fileNameDisplay.textContent = "Selected file: " + this.files[0].name;
+            } else {
+                fileNameDisplay.textContent = "";
+            }
+        });
+
+        // Form Submission Handling
+        uploadForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const file = receiptFileInput.files[0];
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const timestamp = new Date().toISOString();
+            
+            // Validate form
+            if (!file) {
+                showStatus("Please upload a payment receipt.", "error");
+                return;
+            }
+            
+            // Disable submit button and show progress
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Uploading...";
+            progressContainer.style.display = "block";
+            showStatus("Uploading your receipt, please wait...", "loading");
+            
+            // Create a unique filename
+            const fileExtension = file.name.split('.').pop();
+            const uniqueFileName = `${name.replace(/\s+/g, '_')}_${Date.now()}_receipt.${fileExtension}`;
+            
+            // Reference to storage location
+            const storageReference = ref(storage, 'receipts/' + uniqueFileName);
+            
+            // Upload the file
+            const uploadTask = uploadBytesResumable(storageReference, file);
+            
+            // Monitor upload progress
+            uploadTask.on('state_changed', 
+                // Progress function
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = progress + '%';
+                    console.log('Upload is ' + progress + '% done');
+                }, 
+                // Error function
+                (error) => {
+                    console.error("Upload failed:", error);
+                    showStatus("Failed to upload receipt. Please try again or contact support. Error: " + error.message, "error");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Submit and Get Access";
+                }, 
+                // Complete function
+                () => {
+                    // Get download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        // Store user data in Firebase database
+                        const userData = {
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            receiptURL: downloadURL,
+                            timestamp: timestamp,
+                            status: "pending" // For admin to review
+                        };
+                        
+                        // Generate a unique ID for this user submission
+                        const userDbRef = dbRef(database, 'users/' + Date.now());
+                        
+                        // Save to database
+                        set(userDbRef, userData)
+                            .then(() => {
+                                showStatus("Receipt uploaded successfully! Our team will review your payment and send you the contact list soon. Please check your email.", "success");
+                                uploadForm.reset();
+                                fileNameDisplay.textContent = "";
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = "Submit and Get Access";
+                                progressContainer.style.display = "none";
+                            })
+                            .catch((error) => {
+                                console.error("Failed to save user data:", error);
+                                showStatus("Receipt uploaded but failed to save your contact details. Please contact support. Error: " + error.message, "error");
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = "Submit and Get Access";
+                            });
+                    }).catch((error) => {
+                        console.error("Failed to get download URL:", error);
+                        showStatus("Upload completed but couldn't retrieve file URL. Please contact support. Error: " + error.message, "error");
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Submit and Get Access";
+                    });
+                }
+            );
+        });
+
+        // Function to show status messages
+        function showStatus(message, type) {
+            uploadStatus.textContent = message;
+            uploadStatus.style.display = "block";
+            
+            // Remove existing classes
+            uploadStatus.classList.remove("success", "error", "loading");
+            
+            // Add appropriate class
+            uploadStatus.classList.add(type);
+        }
+    </script>
+</body>
+</html>
