@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Revolutionary pain relief medication that provides permanent relief from chronic pain. Learn about our natural formula and money-back guarantee."
+    />
+    <meta
+      name="keywords"
+      content="pain relief, permanent cure, chronic pain, natural medicine"
+    />
+    <meta name="author" content="Dr. Serrah Amadi" />
+    <title>PainAway - Revolutionary Permanent Pain Relief Solution</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #2e7d32;
+        --secondary-color: #1b5e20;
+        --accent-color: #ffc107;
+        --text-color: #333;
+        --light-bg: #f5f5f5;
+        --white: #ffffff;
+        --error: #d32f2f;
+        --success: #388e3c;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        background: linear-gradient(
+            rgba(46, 125, 50, 0.8),
+            rgba(27, 94, 32, 0.9)
+          ),
+          url("https://img.freepik.com/free-photo/top-view-pills-medical-items_23-2148528142.jpg");
+        background-size: cover;
+        background-position: center;
+        color: var(--white);
+        padding: 80px 0;
+        text-align: center;
+      }
+
+      .hero h2 {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+      }
+
+      .cta-button {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .cta-button:hover {
+        background-color: #ffb300;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 80px 0;
+      }
+
+      .product-image {
+        flex: 1;
+        min-width: 300px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .product-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .product-image img:hover {
+        transform: scale(1.05);
+      }
+
+      .product-info {
+        flex: 1;
+        min-width: 300px;
+        padding: 20px;
+      }
+
+      .product-info h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+      }
+
+      .product-info .price {
+        font-size: 2rem;
+        margin: 20px 0;
+        color: var(--primary-color);
+      }
+
+      .product-info .price .original {
+        text-decoration: line-through;
+        color: #888;
+        font-size: 1.5rem;
+      }
+
+      .benefits {
+        background-color: var(--white);
+        padding: 80px 0;
+      }
+
+      .benefits h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 50px;
+        color: var(--primary-color);
+      }
+
+      .benefits-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+      }
+
+      .benefit-card {
+        background-color: var(--white);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        width: 300px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .benefit-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .benefit-card i {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      .benefit-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+      }
+
+      .testimonials {
+        padding: 80px 0;
+        background-color: var(--light-bg);
+      }
+
+      .testimonials h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 50px;
+        color: var(--primary-color);
+      }
+
+      .testimonial-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+      }
+
+      .testimonial-card {
+        background-color: var(--white);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        width: 350px;
+      }
+
+      .testimonial-card p {
+        font-style: italic;
+        margin-bottom: 20px;
+      }
+
+      .testimonial-card .user {
+        display: flex;
+        align-items: center;
+      }
+
+      .testimonial-card .user img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      .testimonial-card .stars {
+        color: var(--accent-color);
+        margin-top: 5px;
+      }
+
+      .payment-section {
+        background-color: var(--white);
+        padding: 80px 0;
+        text-align: center;
+      }
+
+      .payment-section h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: var(--primary-color);
+      }
+
+      .payment-details {
+        background-color: var(--light-bg);
+        max-width: 500px;
+        margin: 0 auto 30px;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: left;
+      }
+
+      .payment-details p {
+        margin: 10px 0;
+        font-size: 1.1rem;
+      }
+
+      .payment-details strong {
+        color: var(--primary-color);
+      }
+
+      .order-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: var(--white);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        text-align: left;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        outline: none;
+      }
+
+      .file-upload {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+
+      .file-input {
+        padding: 10px;
+        background-color: var(--light-bg);
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .submit-btn {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: 5px;
+        padding: 15px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+      }
+
+      .submit-btn:hover {
+        background-color: var(--secondary-color);
+      }
+
+      .contact-section {
+        padding: 40px 0;
+        text-align: center;
+      }
+
+      .whatsapp-button {
+        display: inline-flex;
+        align-items: center;
+        background-color: #25d366;
+        color: var(--white);
+        padding: 12px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .whatsapp-button:hover {
+        background-color: #128c7e;
+        transform: translateY(-3px);
+      }
+
+      .whatsapp-button i {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 30px 0;
+        text-align: center;
+      }
+
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .loading.show {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .alert {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-align: left;
+        display: none;
+      }
+
+      .alert-success {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: var(--success);
+      }
+
+      .alert-error {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: var(--error);
+      }
+
+      @media (max-width: 768px) {
+        .product-section {
+          flex-direction: column;
+        }
+
+        .product-image,
+        .product-info {
+          width: 100%;
+        }
+
+        .hero h2 {
+          font-size: 2rem;
+        }
+
+        .order-form {
+          padding: 20px;
+        }
+      }
+
+      #order-form-section {
+        scroll-margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <h1>PainAway Plus</h1>
+        <p>Revolutionizing Pain Relief - The End of Chronic Pain</p>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h2>Say Goodbye to Pain Forever</h2>
+        <p>
+          Our revolutionary formula targets the root cause of pain, not just the
+          symptoms. Experience life pain-free with our clinically proven
+          solution.
+        </p>
+        <a href="#order-form-section" class="cta-button"
+          >Get Relief Now - Limited Time Offer!</a
+        >
+      </div>
+    </section>
+
+    <section class="product-section">
+      <div class="container">
+        <div class="product-image">
+          <img
+            src="https://codehubme.wordpress.com/wp-content/uploads/2025/03/img-20250306-wa0058-removebg-preview6671595038739512268.png"
+            alt="PainAway Plus Medicine Bottle"
+            id="product-image"
+          />
+        </div>
+        <div class="product-info">
+          <h2>PainAway Plus - Advanced Formula</h2>
+          <p>
+            PainAway Plus is a revolutionary pain relief medication developed
+            after 15 years of intensive research by top medical scientists.
+            Unlike conventional pain medications that merely mask symptoms,
+            PainAway Plus targets and repairs the underlying causes of pain at
+            the cellular level.
+          </p>
+          <p>
+            Our proprietary blend of natural extracts and clinically tested
+            compounds works synergistically to:
+          </p>
+          <ul>
+            <li>Repair damaged nerve pathways</li>
+            <li>Reduce inflammation at the source</li>
+            <li>Regenerate damaged tissue</li>
+            <li>Restore normal cellular function</li>
+          </ul>
+          <div class="price">
+            <span class="original">₦75,000</span>
+            <span class="discount">₦25,000</span>
+            <p><small>Limited time offer - Only for first 5 buyers!</small></p>
+          </div>
+          <a href="#order-form-section" class="cta-button">Order Now</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <div class="container">
+        <h2>Why Choose PainAway Plus?</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <i class="fas fa-check-circle"></i>
+            <h3>Permanent Relief</h3>
+            <p>
+              Not just temporary relief - our formula addresses the root cause
+              of pain for permanent results.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fas fa-leaf"></i>
+            <h3>Natural Ingredients</h3>
+            <p>
+              Formulated with 85% natural compounds and plant extracts for
+              minimal side effects.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fas fa-flask"></i>
+            <h3>Clinically Proven</h3>
+            <p>
+              Tested in multiple clinical trials with a 94.7% success rate
+              across all pain types.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fas fa-heartbeat"></i>
+            <h3>Works For All Pain</h3>
+            <p>
+              Effective against arthritis, migraines, back pain, joint pain,
+              nerve pain, and more.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>No Side Effects</h3>
+            <p>
+              Unlike traditional painkillers, our formula has no harmful side
+              effects or addiction potential.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fas fa-undo"></i>
+            <h3>Money-Back Guarantee</h3>
+            <p>
+              If you don't experience significant relief within 30 days, we'll
+              refund your purchase.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <div class="container">
+        <h2>Real Results from Real People</h2>
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <p>
+              "After suffering from chronic back pain for 12 years, I had tried
+              everything. Within 3 weeks of taking PainAway Plus, I was
+              completely pain-free. It's been 8 months now and the pain hasn't
+              returned!"
+            </p>
+            <div class="user">
+              <img src="https://i1.rgstatic.net/ii/profile.image/787704711221249-1564814846524_Q128/Chigozie-Okonkwo-2.jpg" alt="User Avatar" />
+              <div>
+                <strong>Emmanuel Okonkwo</strong>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p>
+              "My arthritis pain was so bad I could barely hold a cup. PainAway
+              Plus gave me my life back. I can now play with my grandchildren
+              and even started gardening again. This is truly a miracle
+              medicine."
+            </p>
+            <div class="user">
+              <img src="https://assets.isu.pub/document-structure/210228195117-1699df18b9b89424e8e83ebdca6cd868/v1/8cd189a3f31a0fe2c8a03e0522d0010c.jpg?width=1440&quality=85%2C50" alt="User Avatar" />
+              <div>
+                <strong>Fatima Ibrahim</strong>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p>
+              "As a physician, I was skeptical, but after reviewing the clinical
+              data and trying it on some of my chronic pain patients, I'm
+              convinced. The results have been remarkable with over 90%
+              reporting complete pain resolution."
+            </p>
+            <div class="user">
+              <img src="https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Emmanuel-Chinedum-Okonkwo.jpg" alt="User Avatar" />
+              <div>
+                <strong>Dr. Chinedu Adeyemi</strong>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="payment-section" id="order-form-section">
+      <div class="container">
+        <h2>Order Your PainAway Plus Today</h2>
+
+        <div class="payment-details">
+          <h3>Payment Details</h3>
+          <p><strong>Account Number:</strong> 5555969924</p>
+          <p><strong>Bank:</strong> Moniepoint</p>
+          <p><strong>Account Name:</strong> PainAway Health Solutions Ltd.</p>
+          <p><strong>Amount:</strong> ₦25,000</p>
+          <p>
+            <small
+              >* Make payment before filling the order form below. Upload
+              receipt images to confirm your payment.</small
+            >
+          </p>
+        </div>
+
+        <div class="order-form">
+          <div class="alert alert-success" id="success-alert">
+            Your order has been placed successfully! Our team will contact you
+            within 24 hours to confirm delivery details.
+          </div>
+          <div class="alert alert-error" id="error-alert">
+            There was an error processing your order. Please try again or
+            contact our support team for assistance.
+          </div>
+
+          <form id="orderForm">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="address">Delivery Address</label>
+              <textarea
+                id="address"
+                class="form-control"
+                placeholder="Enter your full delivery address"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="contact">Phone Number</label>
+              <input
+                type="tel"
+                id="contact"
+                class="form-control"
+                placeholder="Enter your phone number"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                placeholder="Enter your email address"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Upload Payment Receipt</label>
+              <div class="file-upload">
+                <label for="receipt1" class="file-input"
+                  >Upload First Receipt Image</label
+                >
+                <input
+                  type="file"
+                  id="receipt1"
+                  accept="image/*"
+                  required
+                  style="display: none"
+                />
+                <small id="receipt1-name">No file chosen</small>
+              </div>
+
+              <div class="file-upload">
+                <label for="receipt2" class="file-input"
+                  >Upload Second Receipt Image</label
+                >
+                <input
+                  type="file"
+                  id="receipt2"
+                  accept="image/*"
+                  required
+                  style="display: none"
+                />
+                <small id="receipt2-name">No file chosen</small>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Place Order Now</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <div class="container">
+        <h2>Have Questions? Contact Our Medical Expert</h2>
+        <p>
+          Dr. Serrah Amadi is available to answer all your questions about
+          PainAway Plus.
+        </p>
+        <a
+          href="https://wa.me/+2349159307408?text=Hello%20Doctor%20Serrah%20Amadi,%20I%20have%20a%20question%20about%20PainAway%20Plus"
+          target="_blank"
+          class="whatsapp-button"
+        >
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 PainAway Health Solutions. All Rights Reserved.</p>
+        <p>
+          <small
+            >Results may vary. Consult with a healthcare professional before
+            starting any new medication.</small
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize Firebase
+      
+              const firebaseConfig = {
+            apiKey: "AIzaSyDJP2XIR51qGTLINiKvEoscYTMt11CaZ5s",
+            authDomain: "paytrust-71e30.firebaseapp.com",
+            databaseURL: "https://paytrust-71e30-default-rtdb.firebaseio.com/",
+            projectId: "paytrust-71e30",
+            storageBucket: "gs://paytrust-71e30.appspot.com",
+            messagingSenderId: "492609516838",
+            appId: "1:492609516838:android:5a924ad3b7e8e508fa3de7"
+        };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      // File upload preview handlers
+      document
+        .getElementById("receipt1")
+        .addEventListener("change", function (e) {
+          document.getElementById("receipt1-name").textContent = e.target
+            .files[0]
+            ? e.target.files[0].name
+            : "No file chosen";
+        });
+
+      document
+        .getElementById("receipt2")
+        .addEventListener("change", function (e) {
+          document.getElementById("receipt2-name").textContent = e.target
+            .files[0]
+            ? e.target.files[0].name
+            : "No file chosen";
+        });
+
+      // Loading indicator functions
+      function showLoading() {
+        document.getElementById("loading").classList.add("show");
+      }
+
+      function hideLoading() {
+        document.getElementById("loading").classList.remove("show");
+      }
+
+      // Alert functions
+      function showSuccessAlert() {
+        const alert = document.getElementById("success-alert");
+        alert.style.display = "block";
+        setTimeout(() => {
+          alert.style.display = "none";
+        }, 5000);
+      }
+
+      function showErrorAlert(message) {
+        const alert = document.getElementById("error-alert");
+        if (message) {
+          alert.textContent = message;
+        }
+        alert.style.display = "block";
+        setTimeout(() => {
+          alert.style.display = "none";
+        }, 5000);
+      }
+
+      // Form submission handler
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const address = document.getElementById("address").value;
+          const contact = document.getElementById("contact").value;
+          const email = document.getElementById("email").value;
+          const receipt1File = document.getElementById("receipt1").files[0];
+          const receipt2File = document.getElementById("receipt2").files[0];
+
+          if (!receipt1File || !receipt2File) {
+            showErrorAlert("Please upload both receipt images.");
+            return;
+          }
+
+          try {
+            showLoading();
+
+            // Generate unique filenames
+            const timestamp = new Date().getTime();
+            const receipt1FileName = `receipts/${name.replace(
+              /\s+/g,
+              "_"
+            )}_1_${timestamp}.jpg`;
+            const receipt2FileName = `receipts/${name.replace(
+              /\s+/g,
+              "_"
+            )}_2_${timestamp}.jpg`;
+
+            // Upload first receipt
+            const receipt1Ref = storage.ref(receipt1FileName);
+            await receipt1Ref.put(receipt1File);
+            const receipt1URL = await receipt1Ref.getDownloadURL();
+
+            // Upload second receipt
+            const receipt2Ref = storage.ref(receipt2FileName);
+            await receipt2Ref.put(receipt2File);
+            const receipt2URL = await receipt2Ref.getDownloadURL();
+
+            // Save order to Firestore
+            await db.collection("orders").add({
+              name: name,
+              address: address,
+              contact: contact,
+              email: email,
+              receipt1URL: receipt1URL,
+              receipt2URL: receipt2URL,
+              orderDate: firebase.firestore.FieldValue.serverTimestamp(),
+              status: "pending",
+              productName: "PainAway Plus",
+              amount: 25000,
+            });
+
+            // Reset form and show success message
+            document.getElementById("orderForm").reset();
+            document.getElementById("receipt1-name").textContent =
+              "No file chosen";
+            document.getElementById("receipt2-name").textContent =
+              "No file chosen";
+            showSuccessAlert();
+
+            // Send order notification (in a real app, you would implement this)
+            // await sendOrderNotification(email, name);
+          } catch (error) {
+            console.error("Error submitting order:", error);
+            showErrorAlert(
+              "Failed to place order. Please try again or contact support."
+            );
+          } finally {
+            hideLoading();
+          }
+        });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          const targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Product image hover effect
+      const productImage = document.getElementById("product-image");
+      if (productImage) {
+        productImage.addEventListener("mouseover", function () {
+          this.style.transform = "scale(1.05)";
+        });
+
+        productImage.addEventListener("mouseout", function () {
+          this.style.transform = "scale(1)";
+        });
+      }
+    </script>
+  </body>
+</html>
