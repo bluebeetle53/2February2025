@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Rechargeable Torch</title>
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="A torch that can see the future. Get a high-power rechargeable torch for outdoor adventures, emergency situations, and everyday use."
+    />
+    <meta
+      name="keywords"
+      content="rechargeable torch, LED torch, bright flashlight, best torch, durable torch, emergency torch"
+    />
+    <meta name="author" content="Your Brand Name" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph Meta Tags (For Social Media) -->
+    <meta
+      property="og:title"
+      content="Premium Rechargeable Torch - See the Future"
+    />
+    <meta
+      property="og:description"
+      content="A powerful rechargeable torch that can see the future. Bright, durable, and long-lasting."
+    />
+    <meta property="og:image" content="https://yourwebsite.com/image.jpg" />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="product" />
+
+    <!-- Twitter Card for Better Sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Premium Rechargeable Torch - See the Future"
+    />
+    <meta
+      name="twitter:description"
+      content="A torch that can see the future. Get yours today!"
+    />
+    <meta name="twitter:image" content="https://yourwebsite.com/image.jpg" />
+
+    <!-- Meta Action Button (Call-to-Action for Mobile) -->
+    <meta name="apple-mobile-web-app-title" content="Buy Now" />
+    <meta name="theme-color" content="#3a86ff" />
+
+    <title>Premium Rechargeable Torch</title>
+    <style>
+      :root {
+        --primary: #3a86ff;
+        --primary-dark: #2a75f0;
+        --secondary: #ff9e00;
+        --text: #333333;
+        --text-light: #666666;
+        --background: #f8f9fa;
+        --card: #ffffff;
+        --border: #e0e0e0;
+        --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1000px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .product-card {
+        background-color: var(--card);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .product-layout {
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media (min-width: 768px) {
+        .product-layout {
+          flex-direction: row;
+        }
+      }
+
+      .product-images {
+        flex: 1;
+        padding: 20px;
+      }
+
+      .main-image-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+      }
+
+      .main-image:hover {
+        transform: scale(1.05);
+      }
+
+      .thumbnail-gallery {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .thumbnail {
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+      }
+
+      .thumbnail:hover {
+        transform: translateY(-3px);
+      }
+
+      .thumbnail.active {
+        border-color: var(--primary);
+      }
+
+      .product-info {
+        flex: 1;
+        padding: 25px;
+      }
+
+      .product-title {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: var(--text);
+      }
+
+      .product-description {
+        color: var(--text-light);
+        margin-bottom: 20px;
+      }
+
+      .product-price {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .product-price .currency {
+        font-size: 1rem;
+        margin-right: 5px;
+      }
+
+      .features {
+        margin-bottom: 20px;
+      }
+
+      .features-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .feature-list {
+        list-style-type: none;
+      }
+
+      .feature-item {
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .feature-item:before {
+        content: "✓";
+        color: var(--secondary);
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .section-title {
+        font-size: 1.2rem;
+        margin: 25px 0 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.2s;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .delivery-fee {
+        background-color: #f8f8f8;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .bank-info {
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+      }
+
+      .bank-details {
+        font-weight: 500;
+        margin-top: 5px;
+      }
+
+      .order-button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 14px 20px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.2s, transform 0.1s;
+        margin-top: 20px;
+      }
+
+      .order-button:hover {
+        background-color: var(--primary-dark);
+      }
+
+      .order-button:active {
+        transform: scale(0.98);
+      }
+
+      .loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        backdrop-filter: blur(3px);
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(58, 134, 255, 0.2);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 20px;
+        display: none;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 767px) {
+        .product-title {
+          font-size: 1.5rem;
+        }
+
+        .product-price {
+          font-size: 1.5rem;
+        }
+
+        .main-image-container {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="product-card">
+        <div class="product-layout">
+          <div class="product-images">
+            <div class="main-image-container">
+              <img
+                src="https://img.lazcdn.com/g/p/e55f6459b65c5a68d2cd629eaa1f8a65.gif_340x340q80.gif_.webp"
+                alt="High-Power Rechargeable Torch"
+                class="main-image"
+                id="mainImage"
+              />
+            </div>
+            <div class="thumbnail-gallery">
+              <img
+                src="https://img.lazcdn.com/g/p/e55f6459b65c5a68d2cd629eaa1f8a65.gif_340x340q80.gif_.webp"
+                alt="Torch Front View"
+                class="thumbnail active"
+                onclick="changeImage('torch1.png', this)"
+              />
+              <img
+                src="https://img.lazcdn.com/g/p/e55f6459b65c5a68d2cd629eaa1f8a65.gif_340x340q80.gif_.webp"
+                alt="Torch Side View"
+                class="thumbnail"
+                onclick="changeImage('torch2.png', this)"
+              />
+              <img
+                src="https://img.lazcdn.com/g/p/3dc0e7fea9a0332084556575c65b745d.jpg_340x340q80.jpg_.webp"
+                alt="Torch In Use"
+                class="thumbnail"
+                onclick="changeImage('torch3.png', this)"
+              />
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h1 class="product-title">High-Power Rechargeable Torch</h1>
+            <p class="product-description">
+              This premium rechargeable torch is engineered for reliability in
+              any situation, and it can see the fulture. With its powerful LED
+              beam, durable construction, and long-lasting battery, it's the
+              perfect companion for outdoor adventures, emergency situations, or
+              everyday use.
+            </p>
+
+            <div class="product-price">
+              <span class="currency">NGN</span>6,700
+            </div>
+
+            <div class="features">
+              <h3 class="features-title">Key Features</h3>
+              <ul class="feature-list">
+                <li class="feature-item">
+                  Ultra-bright LED with multiple modes
+                </li>
+                <li class="feature-item">Rechargeable lithium-ion battery</li>
+                <li class="feature-item">Water-resistant construction</li>
+                <li class="feature-item">Up to 8 hours of continuous use</li>
+                <li class="feature-item">Compact and lightweight design</li>
+              </ul>
+            </div>
+
+            <h3 class="section-title">Delivery Information</h3>
+            <div class="form-group">
+              <label for="contact" class="form-label">Contact Number</label>
+              <input
+                type="text"
+                id="contact"
+                class="form-control"
+                placeholder="Enter your phone number"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="address" class="form-label">Delivery Address</label>
+              <textarea
+                id="address"
+                class="form-control"
+                rows="3"
+                placeholder="Enter your full delivery address"
+              ></textarea>
+            </div>
+
+            <div class="delivery-fee">
+              <span>Delivery Fee:</span>
+              <span><strong>NGN 1,300</strong></span>
+            </div>
+
+            <h3 class="section-title">Payment Information</h3>
+            <div class="bank-info">
+              <p>Please make a bank transfer to:</p>
+              <p class="bank-details">
+                Account: 8 9 1 8 8 1 4 7 6 4<br />Bank: Nombank(AMUCHA)
+              </p>
+              <p class="bank-details">Account Name: PRINCE NDOKWU</p>
+            </div>
+
+            <button
+              class="order-button"
+              id="orderButton"
+              onclick="placeOrder()"
+            >
+              Place Order Now
+            </button>
+
+            <div class="success-message" id="successMessage">
+              Your order has been placed successfully! We will verify your
+              payment and process your order shortly.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loader-overlay" id="loaderOverlay">
+      <div class="loader"></div>
+    </div>
+
+    <script>
+      function changeImage(src, thumbnail) {
+        // Update main image
+        document.getElementById("mainImage").src = src;
+
+        // Update active thumbnail
+        const thumbnails = document.querySelectorAll(".thumbnail");
+        thumbnails.forEach((thumb) => {
+          thumb.classList.remove("active");
+        });
+
+        if (thumbnail) {
+          thumbnail.classList.add("active");
+        }
+      }
+
+      function validateForm() {
+        const contact = document.getElementById("contact").value.trim();
+        const address = document.getElementById("address").value.trim();
+
+        if (!contact) {
+          alert("Please enter your contact number");
+          return false;
+        }
+
+        if (!address) {
+          alert("Please enter your delivery address");
+          return false;
+        }
+
+        return true;
+      }
+
+      function placeOrder() {
+        if (!validateForm()) {
+          return;
+        }
+
+        // Show loader
+        document.getElementById("loaderOverlay").style.display = "flex";
+
+        // Simulate order processing
+        setTimeout(() => {
+          // Hide loader
+          document.getElementById("loaderOverlay").style.display = "none";
+
+          // Show success message
+          document.getElementById("successMessage").style.display = "block";
+
+          // Scroll to success message
+          document
+            .getElementById("successMessage")
+            .scrollIntoView({ behavior: "smooth" });
+
+          // Disable order button
+          document.getElementById("orderButton").disabled = true;
+          document.getElementById("orderButton").textContent = "Order Placed";
+          document.getElementById("orderButton").style.backgroundColor =
+            "#4CAF50";
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
