@@ -279,6 +279,7 @@
         padding: 15px;
         border-radius: 10px;
         margin-bottom: 20px;
+        display: block;
       }
 
       .activation-message {
@@ -413,18 +414,74 @@
         }
       }
 
-      .empty-tasks {
-        text-align: center;
-        padding: 30px 0;
-        color: #6c757d;
-      }
-
       .footer {
         text-align: center;
         margin-top: 30px;
         margin-bottom: 20px;
         font-size: 0.8rem;
         color: #6c757d;
+      }
+
+      /* Modal Styling */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        border-radius: 15px;
+        padding: 25px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      .modal-title {
+        color: var(--primary);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+
+      .modal-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 15px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .success-message {
+        color: var(--success);
+        font-weight: 600;
+        margin-top: 10px;
+      }
+
+      .error-message {
+        color: var(--accent);
+        font-weight: 600;
+        margin-top: 10px;
+      }
+
+      a {
+        text-decoration: none;
       }
     </style>
   </head>
@@ -475,7 +532,7 @@
         </div>
       </div>
 
-      <div class="card activation-card">
+      <div class="card activation-card" id="activationCard">
         <p class="activation-message">
           <i class="fas fa-exclamation-circle"></i> Activate your account to
           start performing tasks and withdraw your earnings
@@ -495,32 +552,54 @@
             <span class="task-title"
               ><span class="task-number">1</span> Follow on Facebook</span
             >
-            <button class="task-btn">Complete</button>
+            <a
+              href="https://www.facebook.com/riopresh.org"
+              class="task-btn"
+              data-task="facebook"
+              >Complete</a
+            >
           </li>
           <li class="task-item">
             <span class="task-title"
               ><span class="task-number">2</span> Follow on Twitter</span
             >
-            <button class="task-btn">Complete</button>
+            <a
+              href="https://x.com/moniebase?t=9SxzivpKcUesmslS7nCmbQ&s=09"
+              class="task-btn"
+              data-task="twitter"
+              >Complete</a
+            >
           </li>
           <li class="task-item">
             <span class="task-title"
               ><span class="task-number">3</span> Like and repost on
               Twitter</span
             >
-            <button class="task-btn">Complete</button>
+            <a
+              href="https://x.com/moniebase/status/1895440308617539790?s=19"
+              class="task-btn"
+              data-task="repost"
+              >Complete</a
+            >
           </li>
           <li class="task-item">
             <span class="task-title"
               ><span class="task-number">4</span> Subscribe on YouTube</span
             >
-            <button class="task-btn">Complete</button>
+            <a
+              href="https://youtube.com/@marvexstudios?si=wqxT1_SgvB_BUg4G"
+              class="task-btn"
+              data-task="youtube"
+              >Complete</a
+            >
           </li>
           <li class="task-item">
             <span class="task-title"
               ><span class="task-number">5</span> Join Telegram Group</span
             >
-            <button class="task-btn">Complete</button>
+            <a href="https://t.me/opaygi" class="task-btn" data-task="telegram"
+              >Complete</a
+            >
           </li>
         </ul>
 
@@ -536,32 +615,77 @@
       </div>
     </div>
 
+    <!-- Verification Modal -->
+    <div class="modal" id="verificationModal">
+      <div class="modal-content">
+        <h3 class="modal-title">Account Verification</h3>
+        <p>Please enter the verification code to activate your account</p>
+        <input
+          type="text"
+          class="modal-input"
+          id="verificationCode"
+          placeholder="Enter verification code"
+        />
+        <div id="verificationMessage"></div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" id="cancelVerification">
+            Cancel
+          </button>
+          <button class="btn btn-primary" id="submitVerification">
+            Verify
+          </button>
+          <a href="activate.html">
+            <button class="btn btn-outline" id="cancelVerification">
+              Get Code
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdrawal Modal -->
+    <div class="modal" id="withdrawModal">
+      <div class="modal-content">
+        <h3 class="modal-title">Withdraw Funds</h3>
+        <p>Enter your banking details to withdraw funds</p>
+        <input
+          type="text"
+          class="modal-input"
+          id="accountNumber"
+          placeholder="Account Number"
+        />
+        <input
+          type="text"
+          class="modal-input"
+          id="bankName"
+          placeholder="Bank Name"
+        />
+        <div id="withdrawMessage"></div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" id="cancelWithdraw">Cancel</button>
+          <button class="btn btn-primary" id="submitWithdraw">Withdraw</button>
+        </div>
+      </div>
+    </div>
+
     <script>
-      // Set user's first initial as avatar
-      function setAvatar() {
-        const username = localStorage.getItem("username") || "User";
-        const initial = username.charAt(0).toUpperCase();
-        document.getElementById("avatar").innerText = initial;
-      }
-
-      // Retrieve username from localStorage
-      const username = localStorage.getItem("username") || "User";
-      document.getElementById("username").innerText = username;
-
-      // Set the avatar
-      setAvatar();
-
-      // Retrieve balance from localStorage or set default ₦500
+      // Initialize variables
+      let isActivated = localStorage.getItem("isActivated") === "true";
       let balance = localStorage.getItem("balance")
         ? parseInt(localStorage.getItem("balance"))
         : 500;
+      const username = localStorage.getItem("username") || "User";
+      const correctCode = "E994LIFE";
+
+      // Set initial values
+      document.getElementById("username").innerText = username;
+      document.getElementById("avatar").innerText = username
+        .charAt(0)
+        .toUpperCase();
       document.getElementById("balance").innerText = balance;
-
-      // Set referral link with username
-      const referralLink = `https://url-shortener.me/DEU?ref=${username}`;
-      document.getElementById("referralLink").innerText = referralLink;
-
-      // Set current date
+      document.getElementById(
+        "referralLink"
+      ).innerText = `https://url-shortener.me/DEU?ref=${username}`;
       document.getElementById("currentDate").innerText =
         new Date().toLocaleDateString("en-US", {
           year: "numeric",
@@ -569,33 +693,39 @@
           day: "numeric",
         });
 
-      // Copy referral link and update balance
-      document.getElementById("copyBtn").addEventListener("click", () => {
-        navigator.clipboard
-          .writeText(referralLink)
-          .then(() => {
-            showToast("Referral link copied to clipboard!");
+      // Update UI based on activation status
+      function updateActivationStatus() {
+        if (isActivated) {
+          document.getElementById("account-status").innerText = "Active";
+          document.getElementById("account-status").style.color = "#28a745";
+          document.getElementById("activationCard").style.display = "none";
+          document.getElementById("activateBtn").innerText = "Activated";
+          document.getElementById("activateBtn").disabled = true;
+          enableTasks();
+        } else {
+          document.getElementById("account-status").innerText = "Inactive";
+          disableTasks();
+        }
+      }
 
-            // Add ₦10 to balance
-            balance += 10;
-            document.getElementById("balance").innerText = balance;
-
-            // Save updated balance to localStorage
-            localStorage.setItem("balance", balance);
-          })
-          .catch((err) => {
-            showToast("Failed to copy link. Please try again.");
-          });
-      });
-
-      // Prevent task clicks if not activated
-      document.querySelectorAll(".task-btn").forEach((button) => {
-        button.addEventListener("click", () => {
-          showToast(
-            "You can't perform any task because you haven't activated your account"
-          );
+      // Enable task buttons
+      function enableTasks() {
+        document.querySelectorAll(".task-btn").forEach((button) => {
+          button.addEventListener("click", completeTask);
+          button.style.pointerEvents = "auto";
+          button.style.opacity = "1";
         });
-      });
+      }
+
+      // Disable task buttons
+      function disableTasks() {
+        document.querySelectorAll(".task-btn").forEach((button) => {
+          button.removeEventListener("click", completeTask);
+          button.addEventListener("click", showActivationToast);
+          button.style.pointerEvents = "auto";
+          button.style.opacity = "0.5";
+        });
+      }
 
       // Show toast notification
       function showToast(message) {
@@ -607,17 +737,160 @@
         }, 3000);
       }
 
-      // Redirect to activation page
-      document.getElementById("activateBtn").addEventListener("click", () => {
-        window.location.href = "activate.html";
+      // Show activation toast
+      function showActivationToast(e) {
+        e.preventDefault();
+        showToast(
+          "You can't perform any task because you haven't activated your account"
+        );
+      }
+
+      // Complete task and add to balance
+      function completeTask(e) {
+        e.preventDefault();
+        const task = e.target.getAttribute("data-task");
+
+        if (isActivated) {
+          // Add 2000 to balance
+          balance += 2000;
+          document.getElementById("balance").innerText = balance;
+          localStorage.setItem("balance", balance);
+
+          // Mark as completed
+          e.target.innerText = "Completed";
+          e.target.style.backgroundColor = "#28a745";
+          e.target.removeEventListener("click", completeTask);
+
+          showToast(`Task completed! ₦2,000 added to your balance.`);
+        } else {
+          showActivationToast(e);
+        }
+      }
+
+      // Copy referral link
+      document.getElementById("copyBtn").addEventListener("click", () => {
+        const referralLink = document.getElementById("referralLink").innerText;
+        navigator.clipboard
+          .writeText(referralLink)
+          .then(() => {
+            showToast("Referral link copied to clipboard!");
+            // Add ₦10 to balance
+            balance += 50;
+            document.getElementById("balance").innerText = balance;
+            localStorage.setItem("balance", balance);
+          })
+          .catch(() => {
+            showToast("Failed to copy link. Please try again.");
+          });
       });
 
-      // Show withdrawal toast
+      // Show verification modal
+      function showVerificationModal() {
+        document.getElementById("verificationModal").style.display = "flex";
+        document.getElementById("verificationMessage").innerText = "";
+      }
+
+      // Hide verification modal
+      function hideVerificationModal() {
+        document.getElementById("verificationModal").style.display = "none";
+      }
+
+      // Show withdrawal modal
+      function showWithdrawalModal() {
+        if (!isActivated) {
+          showToast("Unable to initiate withdrawal: Account not activated");
+          return;
+        }
+        document.getElementById("withdrawModal").style.display = "flex";
+        document.getElementById("withdrawMessage").innerText = "";
+      }
+
+      // Hide withdrawal modal
+      function hideWithdrawalModal() {
+        document.getElementById("withdrawModal").style.display = "none";
+      }
+
+      // Verify code
+      function verifyCode() {
+        const code = document.getElementById("verificationCode").value;
+        const messageElement = document.getElementById("verificationMessage");
+
+        if (code === correctCode) {
+          messageElement.innerText =
+            "Verification successful! Account activated.";
+          messageElement.className = "success-message";
+          isActivated = true;
+          localStorage.setItem("isActivated", "true");
+          updateActivationStatus();
+          setTimeout(hideVerificationModal, 1500);
+        } else {
+          messageElement.innerText =
+            "Invalid verification code. Please try again.";
+          messageElement.className = "error-message";
+        }
+      }
+
+      // Process withdrawal
+      function processWithdrawal() {
+        const accountNumber = document.getElementById("accountNumber").value;
+        const bankName = document.getElementById("bankName").value;
+        const messageElement = document.getElementById("withdrawMessage");
+
+        if (!accountNumber || !bankName) {
+          messageElement.innerText = "Please fill in all fields";
+          messageElement.className = "error-message";
+          return;
+        }
+
+        // Check if today is 5th or 17th
+        const today = new Date();
+        const day = today.getDate();
+
+        if (day === 5 || day === 17) {
+          messageElement.innerText =
+            "Withdrawal successful! Funds will be sent to your account.";
+          messageElement.className = "success-message";
+
+          // Reset balance
+          balance = 0;
+          document.getElementById("balance").innerText = balance;
+          localStorage.setItem("balance", balance);
+
+          setTimeout(hideWithdrawalModal, 2000);
+        } else {
+          messageElement.innerText =
+            "Withdrawal is only available on the 5th and 17th of every month.";
+          messageElement.className = "error-message";
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("activateBtn")
+        .addEventListener("click", showVerificationModal);
       document
         .getElementById("withdrawBtn")
-        .addEventListener("click", function () {
-          showToast("Unable to initiate withdrawal: Account not activated");
-        });
+        .addEventListener("click", showWithdrawalModal);
+      document
+        .getElementById("submitVerification")
+        .addEventListener("click", verifyCode);
+      document
+        .getElementById("cancelVerification")
+        .addEventListener("click", hideVerificationModal);
+      document
+        .getElementById("submitWithdraw")
+        .addEventListener("click", processWithdrawal);
+      document
+        .getElementById("cancelWithdraw")
+        .addEventListener("click", hideWithdrawalModal);
+
+      // Show verification modal on page load if not activated
+      document.addEventListener("DOMContentLoaded", () => {
+        updateActivationStatus();
+        if (!isActivated) {
+          setTimeout(showVerificationModal, 1000);
+        }
+      });
     </script>
   </body>
 </html>
