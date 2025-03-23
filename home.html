@@ -745,28 +745,46 @@
         );
       }
 
+
+      
       // Complete task and add to balance
-      function completeTask(e) {
-        e.preventDefault();
-        const task = e.target.getAttribute("data-task");
+function completeTask(e) {
+  e.preventDefault();
+  const task = e.target.getAttribute("data-task");
+  const lastCompleted = localStorage.getItem(`${task}-lastCompleted`);
 
-        if (isActivated) {
-          // Add 2000 to balance
-          balance += 2000;
-          document.getElementById("balance").innerText = balance;
-          localStorage.setItem("balance", balance);
+  // Get the current time and convert to milliseconds
+  const currentTime = new Date().getTime();
+  const timeDifference = currentTime - lastCompleted;
 
-          // Mark as completed
-          e.target.innerText = "Completed";
-          e.target.style.backgroundColor = "#28a745";
-          e.target.removeEventListener("click", completeTask);
+  // Check if 30 minutes have passed (30 minutes = 30 * 60 * 1000 milliseconds)
+  if (isActivated && (timeDifference >= 30 * 60 * 1000 || !lastCompleted)) {
+    // Add 2000 to balance
+    balance += 2000;
+    document.getElementById("balance").innerText = balance;
+    localStorage.setItem("balance", balance);
 
-          showToast(`Task completed! ₦2,000 added to your balance.`);
-        } else {
-          showActivationToast(e);
-        }
-      }
+    // Update last completed time
+    localStorage.setItem(`${task}-lastCompleted`, currentTime);
 
+    // Mark as completed
+    e.target.innerText = "Completed";
+    e.target.style.backgroundColor = "#28a745";
+    e.target.removeEventListener("click", completeTask);
+
+    showToast(`Task completed! ₦2,000 added to your balance.`);
+  } else if (!isActivated) {
+    showActivationToast(e);
+  } else {
+    // Notify user to wait for 30 minutes
+    const remainingTime = Math.ceil((30 * 60 * 1000 - timeDifference) / 1000);
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds = remainingTime % 60;
+    showToast(`Please wait for ${minutes}m ${seconds}s before completing this task again.`);
+  }
+}
+
+      
       // Copy referral link
       document.getElementById("copyBtn").addEventListener("click", () => {
         const referralLink = document.getElementById("referralLink").innerText;
