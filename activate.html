@@ -290,6 +290,45 @@
         padding: 15px;
         font-weight: bold;
       }
+      
+.dialog {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dialog-header {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.dialog-body {
+  font-size: 16px;
+}
+
+.dialog-body a {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+.dialog-body a:hover {
+  color: var(--secondary-hover);
+}
+
     </style>
   </head>
   <body>
@@ -385,6 +424,18 @@
       </div>
     </div>
 
+     <!-- Dialog Box -->
+  <div id="dialog" class="dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <i class="fas fa-comment-alt"></i> <!-- Chat Icon -->
+      </div>
+      <div class="dialog-body">
+        Need help? <a href="https://t.me/Customere_cBot" target="_blank">Click here to contact customer care</a>
+      </div>
+    </div>
+  </div>
+    
     <script>
       // Copy account number functionality
       document
@@ -449,6 +500,24 @@
             }
           }, 1000);
         });
+    </script>
+    <script>
+      // Function to show the dialog box
+function showDialog() {
+  const dialog = document.getElementById('dialog');
+  dialog.style.display = 'block';  // Display the dialog
+
+  // Hide the dialog after 6 seconds
+  setTimeout(() => {
+    dialog.style.display = 'none';
+  }, 6000);
+}
+
+// Call the showDialog function on page load
+window.onload = function() {
+  showDialog();
+};
+
     </script>
   </body>
 </html>
