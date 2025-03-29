@@ -669,246 +669,312 @@
     </div>
 
     <script>
-      // Initialize variables
-      let isActivated = localStorage.getItem("isActivated") === "true";
-      let balance = localStorage.getItem("balance")
-        ? parseInt(localStorage.getItem("balance"))
-        : 500;
-      const username = localStorage.getItem("username") || "User";
-      const correctCode = "SEMPOL2005";
+     // Initialize variables
+let isActivated = localStorage.getItem("isActivated") === "true";
+let balance = localStorage.getItem("balance")
+  ? parseInt(localStorage.getItem("balance"))
+  : 500;
+const username = localStorage.getItem("username") || "User";
+const correctCode = "SEMPOL2005";
 
-      // Set initial values
-      document.getElementById("username").innerText = username;
-      document.getElementById("avatar").innerText = username
-        .charAt(0)
-        .toUpperCase();
-      document.getElementById("balance").innerText = balance;
-      document.getElementById(
-        "referralLink"
-      ).innerText = `https://url-shortener.me/DEU?ref=${username}`;
-      document.getElementById("currentDate").innerText =
-        new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        });
+// Set initial values
+document.getElementById("username").innerText = username;
+document.getElementById("avatar").innerText = username
+  .charAt(0)
+  .toUpperCase();
+document.getElementById("balance").innerText = balance;
+document.getElementById(
+  "referralLink"
+).innerText = `https://url-shortener.me/DEU?ref=${username}`;
+document.getElementById("currentDate").innerText =
+  new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
-      // Update UI based on activation status
-      function updateActivationStatus() {
-        if (isActivated) {
-          document.getElementById("account-status").innerText = "Active";
-          document.getElementById("account-status").style.color = "#28a745";
-          document.getElementById("activationCard").style.display = "none";
-          document.getElementById("activateBtn").innerText = "Activated";
-          document.getElementById("activateBtn").disabled = true;
-          enableTasks();
-        } else {
-          document.getElementById("account-status").innerText = "Inactive";
-          disableTasks();
-        }
-      }
+// Track task completion status
+const taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
 
-      // Enable task buttons
-      function enableTasks() {
-        document.querySelectorAll(".task-btn").forEach((button) => {
-          button.addEventListener("click", completeTask);
-          button.style.pointerEvents = "auto";
-          button.style.opacity = "1";
-        });
-      }
-
-      // Disable task buttons
-      function disableTasks() {
-        document.querySelectorAll(".task-btn").forEach((button) => {
-          button.removeEventListener("click", completeTask);
-          button.addEventListener("click", showActivationToast);
-          button.style.pointerEvents = "auto";
-          button.style.opacity = "0.5";
-        });
-      }
-
-      // Show toast notification
-      function showToast(message) {
-        const toast = document.getElementById("toast");
-        toast.innerText = message;
-        toast.classList.add("show");
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 3000);
-      }
-
-      // Show activation toast
-      function showActivationToast(e) {
-        e.preventDefault();
-        showToast(
-          "You can't perform any task because you haven't activated your account"
-        );
-      }
-
-
-      
-      // Complete task and add to balance
-function completeTask(e) {
-  e.preventDefault();
-  const task = e.target.getAttribute("data-task");
-  const lastCompleted = localStorage.getItem(`${task}-lastCompleted`);
-
-  // Get the current time and convert to milliseconds
-  const currentTime = new Date().getTime();
-  const timeDifference = currentTime - lastCompleted;
-
-  // Check if 30 minutes have passed (30 minutes = 30 * 60 * 1000 milliseconds)
-  if (isActivated && (timeDifference >= 30 * 60 * 1000 || !lastCompleted)) {
-    // Add 2000 to balance
-    balance += 2000;
-    document.getElementById("balance").innerText = balance;
-    localStorage.setItem("balance", balance);
-
-    // Update last completed time
-    localStorage.setItem(`${task}-lastCompleted`, currentTime);
-
-    // Mark as completed
-    e.target.innerText = "Completed";
-    e.target.style.backgroundColor = "#28a745";
-    e.target.removeEventListener("click", completeTask);
-
-    showToast(`Task completed! ₦2,000 added to your balance.`);
-  } else if (!isActivated) {
-    showActivationToast(e);
+// Update UI based on activation status
+function updateActivationStatus() {
+  if (isActivated) {
+    document.getElementById("account-status").innerText = "Active";
+    document.getElementById("account-status").style.color = "#28a745";
+    document.getElementById("activationCard").style.display = "none";
+    document.getElementById("activateBtn").innerText = "Activated";
+    document.getElementById("activateBtn").disabled = true;
+    enableTasks();
   } else {
-    // Notify user to wait for 30 minutes
-    const remainingTime = Math.ceil((30 * 60 * 1000 - timeDifference) / 1000);
-    const minutes = Math.floor(remainingTime / 60);
-    const seconds = remainingTime % 60;
-    showToast(`Please wait for ${minutes}m ${seconds}s before completing this task again.`);
+    document.getElementById("account-status").innerText = "Inactive";
+    disableTasks();
   }
 }
 
-      
-      // Copy referral link
-      document.getElementById("copyBtn").addEventListener("click", () => {
-        const referralLink = document.getElementById("referralLink").innerText;
-        navigator.clipboard
-          .writeText(referralLink)
-          .then(() => {
-            showToast("Referral link copied to clipboard!");
-            // Add ₦10 to balance
-            balance += 50;
-            document.getElementById("balance").innerText = balance;
-            localStorage.setItem("balance", balance);
-          })
-          .catch(() => {
-            showToast("Failed to copy link. Please try again.");
-          });
-      });
+// Enable task buttons
+function enableTasks() {
+  document.querySelectorAll(".task-btn").forEach((button) => {
+    const taskId = button.getAttribute("data-task");
+    
+    // Check if task was already completed today
+    if (wasCompletedToday(taskId)) {
+      button.innerText = "Completed";
+      button.style.backgroundColor = "#28a745";
+      button.style.pointerEvents = "none";
+    } else {
+      button.addEventListener("click", prepareTask);
+      button.style.pointerEvents = "auto";
+      button.style.opacity = "1";
+    }
+  });
+}
 
-      // Show verification modal
-      function showVerificationModal() {
-        document.getElementById("verificationModal").style.display = "flex";
-        document.getElementById("verificationMessage").innerText = "";
-      }
+// Check if task was completed today
+function wasCompletedToday(taskId) {
+  if (!taskStatus[taskId]) return false;
+  
+  const lastCompletedDate = new Date(taskStatus[taskId].lastCompleted);
+  const today = new Date();
+  
+  return lastCompletedDate.toDateString() === today.toDateString();
+}
 
-      // Hide verification modal
-      function hideVerificationModal() {
-        document.getElementById("verificationModal").style.display = "none";
-      }
+// Disable task buttons
+function disableTasks() {
+  document.querySelectorAll(".task-btn").forEach((button) => {
+    button.removeEventListener("click", prepareTask);
+    button.addEventListener("click", showActivationToast);
+    button.style.pointerEvents = "auto";
+    button.style.opacity = "0.5";
+  });
+}
 
-      // Show withdrawal modal
-      function showWithdrawalModal() {
-        if (!isActivated) {
-          showToast("Unable to initiate withdrawal: Account not activated");
-          return;
-        }
-        document.getElementById("withdrawModal").style.display = "flex";
-        document.getElementById("withdrawMessage").innerText = "";
-      }
+// Show toast notification
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
 
-      // Hide withdrawal modal
-      function hideWithdrawalModal() {
-        document.getElementById("withdrawModal").style.display = "none";
-      }
+// Show activation toast
+function showActivationToast(e) {
+  e.preventDefault();
+  showToast(
+    "You can't perform any task because you haven't activated your account"
+  );
+}
 
-      // Verify code
-      function verifyCode() {
-        const code = document.getElementById("verificationCode").value;
-        const messageElement = document.getElementById("verificationMessage");
+// Prepare task for completion
+function prepareTask(e) {
+  // Don't prevent default here to allow navigation to the href
+  const taskId = e.target.getAttribute("data-task");
+  const taskHref = e.target.getAttribute("href");
+  
+  // Store the task ID and timestamp in localStorage to track that the user started this task
+  localStorage.setItem("pendingTaskId", taskId);
+  localStorage.setItem("pendingTaskStartTime", new Date().getTime());
+  
+  // We let the navigation happen naturally
+}
 
-        if (code === correctCode) {
-          messageElement.innerText =
-            "Verification successful! Account activated.";
-          messageElement.className = "success-message";
-          isActivated = true;
-          localStorage.setItem("isActivated", "true");
-          updateActivationStatus();
-          setTimeout(hideVerificationModal, 1500);
-        } else {
-          messageElement.innerText =
-            "Invalid verification code. Please try again.";
-          messageElement.className = "error-message";
-        }
-      }
+// Check for pending tasks on page load/return
+function checkPendingTasks() {
+  const pendingTaskId = localStorage.getItem("pendingTaskId");
+  const startTime = localStorage.getItem("pendingTaskStartTime");
+  
+  if (pendingTaskId && startTime) {
+    const now = new Date().getTime();
+    const timeDiff = now - parseInt(startTime);
+    
+    // If at least 10 seconds have passed, consider the task completed
+    // This helps ensure user actually visited the site
+    if (timeDiff > 10000) {
+      completeTask(pendingTaskId);
+    }
+    
+    // Clear pending task data
+    localStorage.removeItem("pendingTaskId");
+    localStorage.removeItem("pendingTaskStartTime");
+  }
+}
 
-      // Process withdrawal
-      function processWithdrawal() {
-        const accountNumber = document.getElementById("accountNumber").value;
-        const bankName = document.getElementById("bankName").value;
-        const messageElement = document.getElementById("withdrawMessage");
+// Complete task and add to balance
+function completeTask(taskId) {
+  if (!isActivated) {
+    showActivationToast();
+    return;
+  }
+  
+  // Get task button
+  const taskButton = document.querySelector(`.task-btn[data-task="${taskId}"]`);
+  
+  // Check if the task was already completed today
+  if (wasCompletedToday(taskId)) {
+    showToast("You've already completed this task today.");
+    return;
+  }
 
-        if (!accountNumber || !bankName) {
-          messageElement.innerText = "Please fill in all fields";
-          messageElement.className = "error-message";
-          return;
-        }
+  // Add 2000 to balance
+  balance += 2000;
+  document.getElementById("balance").innerText = balance;
+  localStorage.setItem("balance", balance);
 
-        // Check if today is 5th or 17th
-        const today = new Date();
-        const day = today.getDate();
+  // Update task status
+  taskStatus[taskId] = {
+    lastCompleted: new Date().getTime(),
+    completed: true
+  };
+  localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
 
-        if (day === 5 || day === 17) {
-          messageElement.innerText =
-            "Withdrawal successful! Funds will be sent to your account.";
-          messageElement.className = "success-message";
+  // Mark as completed in UI
+  if (taskButton) {
+    taskButton.innerText = "Completed";
+    taskButton.style.backgroundColor = "#28a745";
+    taskButton.style.pointerEvents = "none";
+  }
 
-          // Reset balance
-          balance = 0;
-          document.getElementById("balance").innerText = balance;
-          localStorage.setItem("balance", balance);
+  showToast(`Task completed! ₦2,000 added to your balance.`);
+}
 
-          setTimeout(hideWithdrawalModal, 2000);
-        } else {
-          messageElement.innerText =
-            "Withdrawal is only available on the 5th and 17th of every month.";
-          messageElement.className = "error-message";
-        }
-      }
+// Copy referral link
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const referralLink = document.getElementById("referralLink").innerText;
+  navigator.clipboard
+    .writeText(referralLink)
+    .then(() => {
+      showToast("Referral link copied to clipboard!");
+      // Add ₦50 to balance
+      balance += 50;
+      document.getElementById("balance").innerText = balance;
+      localStorage.setItem("balance", balance);
+    })
+    .catch(() => {
+      showToast("Failed to copy link. Please try again.");
+    });
+});
 
-      // Event listeners
-      document
-        .getElementById("activateBtn")
-        .addEventListener("click", showVerificationModal);
-      document
-        .getElementById("withdrawBtn")
-        .addEventListener("click", showWithdrawalModal);
-      document
-        .getElementById("submitVerification")
-        .addEventListener("click", verifyCode);
-      document
-        .getElementById("cancelVerification")
-        .addEventListener("click", hideVerificationModal);
-      document
-        .getElementById("submitWithdraw")
-        .addEventListener("click", processWithdrawal);
-      document
-        .getElementById("cancelWithdraw")
-        .addEventListener("click", hideWithdrawalModal);
+// Show verification modal
+function showVerificationModal() {
+  document.getElementById("verificationModal").style.display = "flex";
+  document.getElementById("verificationMessage").innerText = "";
+}
 
-      // Show verification modal on page load if not activated
-      document.addEventListener("DOMContentLoaded", () => {
-        updateActivationStatus();
-        if (!isActivated) {
-          setTimeout(showVerificationModal, 1000);
-        }
-      });
+// Hide verification modal
+function hideVerificationModal() {
+  document.getElementById("verificationModal").style.display = "none";
+}
+
+// Show withdrawal modal
+function showWithdrawalModal() {
+  if (!isActivated) {
+    showToast("Unable to initiate withdrawal: Account not activated");
+    return;
+  }
+  document.getElementById("withdrawModal").style.display = "flex";
+  document.getElementById("withdrawMessage").innerText = "";
+}
+
+// Hide withdrawal modal
+function hideWithdrawalModal() {
+  document.getElementById("withdrawModal").style.display = "none";
+}
+
+// Verify code
+function verifyCode() {
+  const code = document.getElementById("verificationCode").value;
+  const messageElement = document.getElementById("verificationMessage");
+
+  if (code === correctCode) {
+    messageElement.innerText =
+      "Verification successful! Account activated.";
+    messageElement.className = "success-message";
+    isActivated = true;
+    localStorage.setItem("isActivated", "true");
+    updateActivationStatus();
+    setTimeout(hideVerificationModal, 1500);
+  } else {
+    messageElement.innerText =
+      "Invalid verification code. Please try again.";
+    messageElement.className = "error-message";
+  }
+}
+
+// Process withdrawal
+function processWithdrawal() {
+  const accountNumber = document.getElementById("accountNumber").value;
+  const bankName = document.getElementById("bankName").value;
+  const messageElement = document.getElementById("withdrawMessage");
+
+  if (!accountNumber || !bankName) {
+    messageElement.innerText = "Please fill in all fields";
+    messageElement.className = "error-message";
+    return;
+  }
+
+  // Check if today is 5th or 17th
+  const today = new Date();
+  const day = today.getDate();
+
+  if (day === 5 || day === 17) {
+    messageElement.innerText =
+      "Withdrawal successful! Funds will be sent to your account.";
+    messageElement.className = "success-message";
+
+    // Reset balance
+    balance = 0;
+    document.getElementById("balance").innerText = balance;
+    localStorage.setItem("balance", balance);
+
+    setTimeout(hideWithdrawalModal, 2000);
+  } else {
+    messageElement.innerText =
+      "Withdrawal is only available on the 5th and 17th of every month.";
+    messageElement.className = "error-message";
+  }
+}
+
+// Event listeners
+document
+  .getElementById("activateBtn")
+  .addEventListener("click", showVerificationModal);
+document
+  .getElementById("withdrawBtn")
+  .addEventListener("click", showWithdrawalModal);
+document
+  .getElementById("submitVerification")
+  .addEventListener("click", verifyCode);
+document
+  .getElementById("cancelVerification")
+  .addEventListener("click", hideVerificationModal);
+document
+  .getElementById("submitWithdraw")
+  .addEventListener("click", processWithdrawal);
+document
+  .getElementById("cancelWithdraw")
+  .addEventListener("click", hideWithdrawalModal);
+
+// Show verification modal on page load if not activated
+document.addEventListener("DOMContentLoaded", () => {
+  updateActivationStatus();
+  
+  // Check for pending tasks when page loads
+  checkPendingTasks();
+  
+  if (!isActivated) {
+    setTimeout(showVerificationModal, 1000);
+  }
+});
+
+// Also check for pending tasks when the page becomes visible again
+// This handles cases where user comes back from task site
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    checkPendingTasks();
+  }
+});
     </script>
   </body>
 </html>
