@@ -236,6 +236,40 @@
       border: 1px solid var(--accent);
       color: var(--accent);
     }
+
+    /* Style the floating action button */
+.fab-button {
+  position: fixed;
+  bottom: 20px; /* Distance from the bottom of the screen */
+  right: 20px;  /* Distance from the right of the screen */
+  background-color: #25D366; /* Telegram green color */
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  text-decoration: none; /* Remove underline */
+}
+
+.fab-button:hover {
+  background-color: #128C7E; /* Darker shade when hovering */
+}
+
+.fab-button i {
+  margin: 0;
+}
+
+/* Mobile-friendly size adjustments */
+@media (max-width: 600px) {
+  .fab-button {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px;
+  }
+}
+
   </style>
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -329,6 +363,11 @@
     </div>
   </div>
 
+  <!-- Floating action button -->
+  <a href="https://t.me/opaygi" class="fab-button" target="_blank">
+    <i class="fas fa-comment"></i>
+  </a>
+  
   <script>
     // Tab switching logic
     const loginTab = document.getElementById("loginTab");
