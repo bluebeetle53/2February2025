@@ -3,292 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneSignal Push Notification Demo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Push Notification Demo</title>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-        }
-        
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-        
-        .container {
+            font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            line-height: 1.6;
         }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
         .status-card {
-            background: #f8f9fa;
-            border-left: 4px solid #3498db;
             padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #f5f5f5;
+            border-left: 4px solid #3498db;
         }
-        
         .status-card.success {
             border-left-color: #2ecc71;
         }
-        
         .status-card.error {
             border-left-color: #e74c3c;
         }
-        
-        .btn {
-            display: inline-block;
+        button {
             background: #3498db;
             color: white;
-            padding: 10px 20px;
             border: none;
+            padding: 10px 15px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s;
         }
-        
-        .btn:hover {
-            background: #2980b9;
-        }
-        
-        .btn:disabled {
+        button:disabled {
             background: #95a5a6;
             cursor: not-allowed;
         }
-        
-        .notification-log {
-            margin-top: 30px;
+        #notifications {
+            margin-top: 20px;
             border-top: 1px solid #eee;
             padding-top: 20px;
         }
-        
-        .notification-item {
+        .notification {
             padding: 10px;
             border-bottom: 1px solid #eee;
-        }
-        
-        .notification-item:last-child {
-            border-bottom: none;
-        }
-        
-        .notification-title {
-            font-weight: 500;
-            color: #2c3e50;
-        }
-        
-        .notification-body {
-            color: #7f8c8d;
-        }
-        
-        .notification-time {
-            font-size: 12px;
-            color: #bdc3c7;
-            margin-top: 5px;
-        }
-        
-        .hidden {
-            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Push Notification Demo</h1>
-        
-        <div id="init-status" class="status-card">
-            <p>Initializing OneSignal...</p>
-        </div>
-        
-        <div id="permission-status" class="status-card hidden">
-            <p id="permission-text">Notification permission status: checking...</p>
-            <button id="subscribe-btn" class="btn">Enable Notifications</button>
-        </div>
-        
-        <div id="user-id-card" class="status-card hidden">
-            <p>Your OneSignal User ID:</p>
-            <p id="user-id" style="font-weight: bold; word-break: break-all;"></p>
-        </div>
-        
-        <div class="notification-log">
-            <h2>Received Notifications</h2>
-            <div id="notifications-container"></div>
-        </div>
+    <h1>Push Notification Demo</h1>
+    
+    <div id="init-status" class="status-card">
+        <p>Initializing OneSignal...</p>
+    </div>
+    
+    <div id="permission-status" class="status-card" style="display: none;">
+        <p id="permission-text">Notification permission: checking...</p>
+        <button id="permission-button">Enable Notifications</button>
+    </div>
+    
+    <div id="user-status" class="status-card" style="display: none;">
+        <p>Your OneSignal User ID:</p>
+        <p id="user-id" style="word-break: break-all; font-weight: bold;"></p>
+    </div>
+    
+    <div id="notifications">
+        <h2>Received Notifications</h2>
+        <div id="notifications-list"></div>
     </div>
 
-    <!-- OneSignal SDK -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize OneSignal
-            initializeOneSignal();
-            
-            // Set up button event listeners
-            document.getElementById('subscribe-btn').addEventListener('click', subscribeToNotifications);
+        // Initialize OneSignal
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            try {
+                // Initialize SDK
+                await OneSignal.init({
+                    appId: "91409f09-e008-4776-a821-fc154ad3e4be",
+                    safari_web_id: "web.onesignal.auto.8d9cc6c5-0b39-4a5c-8b2e-1e9a3a5b7c8d",
+                    notifyButton: {
+                        enable: false // We'll use our own button
+                    },
+                    allowLocalhostAsSecureOrigin: true
+                });
+                
+                document.getElementById('init-status').innerHTML = '<p>OneSignal initialized successfully!</p>';
+                document.getElementById('init-status').classList.add('success');
+                
+                // Show permission UI
+                setupPermissionUI(OneSignal);
+                
+                // Show user ID
+                showUserId(OneSignal);
+                
+                // Setup notification handlers
+                setupNotificationHandlers(OneSignal);
+                
+            } catch (error) {
+                document.getElementById('init-status').innerHTML = `<p>Error initializing OneSignal: ${error.message}</p>`;
+                document.getElementById('init-status').classList.add('error');
+                console.error('OneSignal initialization error:', error);
+            }
         });
         
-        function initializeOneSignal() {
-            // Check if OneSignal is already initialized
-            if (window.OneSignal) {
-                initOneSignal();
-            } else {
-                // If not, wait for the SDK to load
-                window.addEventListener('onesignal_initialized', initOneSignal);
-            }
-        }
-        
-        function initOneSignal() {
-            const initStatus = document.getElementById('init-status');
+        function setupPermissionUI(OneSignal) {
+            const permissionStatus = document.getElementById('permission-status');
+            const permissionText = document.getElementById('permission-text');
+            const permissionButton = document.getElementById('permission-button');
             
-            // Initialize OneSignal with your App ID
-            window.OneSignal.init({
-                appId: "91409f09-e008-4776-a821-fc154ad3e4be",
-                safari_web_id: "web.onesignal.auto.8d9cc6c5-0b39-4a5c-8b2e-1e9a3a5b7c8d",
-                notifyButton: {
-                    enable: false // We'll use our own button
-                },
-                allowLocalhostAsSecureOrigin: true,
-                promptOptions: {
-                    /* Customize the prompt appearance if needed */
-                }
-            }).then(() => {
-                initStatus.innerHTML = '<p>OneSignal initialized successfully!</p>';
-                initStatus.classList.add('success');
-                
-                // Show permission status section
-                document.getElementById('permission-status').classList.remove('hidden');
-                
-                // Check current permission state
-                checkPermissionState();
-                
-                // Get the user ID
-                getUserId();
-                
-                // Set up notification handlers
-                setupNotificationHandlers();
-            }).catch(error => {
-                initStatus.innerHTML = `<p>Error initializing OneSignal: ${error.message}</p>`;
-                initStatus.classList.add('error');
-                console.error('OneSignal initialization error:', error);
-            });
-        }
-        
-        function checkPermissionState() {
+            permissionStatus.style.display = 'block';
+            
+            // Check current permission state
             OneSignal.Notifications.permission.then(permission => {
-                updatePermissionUI(permission);
+                updatePermissionState(permission);
             });
             
             // Listen for permission changes
             OneSignal.Notifications.addEventListener('permissionChange', permission => {
-                updatePermissionUI(permission);
+                updatePermissionState(permission);
             });
-        }
-        
-        function updatePermissionUI(permission) {
-            const permissionText = document.getElementById('permission-text');
-            const subscribeBtn = document.getElementById('subscribe-btn');
             
-            if (permission) {
-                permissionText.textContent = "Notification permission status: granted";
-                subscribeBtn.textContent = "Notifications Enabled";
-                subscribeBtn.disabled = true;
-            } else {
-                permissionText.textContent = "Notification permission status: denied or not yet granted";
-                subscribeBtn.textContent = "Enable Notifications";
-                subscribeBtn.disabled = false;
+            // Button click handler
+            permissionButton.addEventListener('click', async () => {
+                const currentPermission = await OneSignal.Notifications.permission;
+                if (!currentPermission) {
+                    const newPermission = await OneSignal.Notifications.requestPermission();
+                    updatePermissionState(newPermission);
+                }
+            });
+            
+            function updatePermissionState(hasPermission) {
+                if (hasPermission) {
+                    permissionText.textContent = "Notification permission: granted";
+                    permissionButton.textContent = "Notifications Enabled";
+                    permissionButton.disabled = true;
+                } else {
+                    permissionText.textContent = "Notification permission: denied";
+                    permissionButton.textContent = "Enable Notifications";
+                    permissionButton.disabled = false;
+                }
             }
         }
         
-        function subscribeToNotifications() {
-            OneSignal.Notifications.requestPermission().then(permission => {
-                if (permission) {
-                    console.log("Notification permission granted");
-                    // Permission was granted
-                    updatePermissionUI(true);
-                } else {
-                    console.log("Notification permission denied");
-                    updatePermissionUI(false);
-                }
-            }).catch(error => {
-                console.error("Error requesting notification permission:", error);
-            });
-        }
-        
-        function getUserId() {
+        function showUserId(OneSignal) {
+            const userStatus = document.getElementById('user-status');
+            const userIdElement = document.getElementById('user-id');
+            
             OneSignal.User.getId().then(userId => {
                 if (userId) {
-                    const userIdElement = document.getElementById('user-id');
                     userIdElement.textContent = userId;
-                    document.getElementById('user-id-card').classList.remove('hidden');
-                    console.log("OneSignal User ID:", userId);
-                } else {
-                    console.log("User ID not available yet");
+                    userStatus.style.display = 'block';
                 }
             });
             
-            // Also listen for changes to the User ID
+            // Listen for changes
             OneSignal.User.addEventListener('change', (change) => {
                 if (change.current.id) {
-                    const userIdElement = document.getElementById('user-id');
                     userIdElement.textContent = change.current.id;
-                    document.getElementById('user-id-card').classList.remove('hidden');
+                    userStatus.style.display = 'block';
                 }
             });
         }
         
-        function setupNotificationHandlers() {
-            // Handle notifications that are received when the app is in focus
+        function setupNotificationHandlers(OneSignal) {
+            const notificationsList = document.getElementById('notifications-list');
+            
+            // Handle foreground notifications
             OneSignal.Notifications.addEventListener('foregroundWillDisplay', event => {
-                console.log('Notification received in foreground:', event);
-                event.preventDefault(); // Prevent default notification display
-                displayCustomNotification(event.notification);
-                
-                // Call event.display() if you want to show the default notification as well
-                // event.display();
+                event.preventDefault(); // Prevent default notification
+                displayNotification(event.notification);
             });
             
-            // Handle notifications that are clicked/opened
+            // Handle clicked notifications
             OneSignal.Notifications.addEventListener('click', event => {
-                console.log('Notification clicked:', event);
-                displayCustomNotification(event.notification, true);
+                displayNotification(event.notification, true);
             });
-        }
-        
-        function displayCustomNotification(notification, wasClicked = false) {
-            const notificationsContainer = document.getElementById('notifications-container');
-            const notificationElement = document.createElement('div');
-            notificationElement.className = 'notification-item';
             
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            const dateString = now.toLocaleDateString();
-            
-            notificationElement.innerHTML = `
-                <div class="notification-title">${notification.title || 'No title'}</div>
-                <div class="notification-body">${notification.body || 'No content'}</div>
-                <div class="notification-time">${dateString} ${timeString} ${wasClicked ? '(clicked)' : ''}</div>
-            `;
-            
-            // Add the new notification at the top
-            if (notificationsContainer.firstChild) {
-                notificationsContainer.insertBefore(notificationElement, notificationsContainer.firstChild);
-            } else {
-                notificationsContainer.appendChild(notificationElement);
+            function displayNotification(notification, wasClicked = false) {
+                const now = new Date();
+                const notificationElement = document.createElement('div');
+                notificationElement.className = 'notification';
+                notificationElement.innerHTML = `
+                    <h3>${notification.title || 'No title'}</h3>
+                    <p>${notification.body || 'No content'}</p>
+                    <small>${now.toLocaleString()} ${wasClicked ? '(clicked)' : ''}</small>
+                `;
+                notificationsList.prepend(notificationElement);
             }
         }
     </script>
