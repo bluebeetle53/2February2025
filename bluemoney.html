@@ -45,36 +45,36 @@
       .container {
         max-width: 1000px;
         margin: 0 auto;
-        padding: 30px 20px;
+        padding: 20px 15px;
       }
 
       .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 40px;
-        padding-bottom: 20px;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
         border-bottom: 1px solid #eaedf3;
       }
 
       .logo {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 700;
         color: var(--primary);
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
       }
 
       .user-welcome {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
 
       .avatar {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         background-color: var(--primary-light);
         color: white;
@@ -82,17 +82,31 @@
         align-items: center;
         justify-content: center;
         font-weight: 600;
+        font-size: 14px;
       }
 
       .grid-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        gap: 20px;
       }
 
       @media (max-width: 768px) {
         .grid-container {
           grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        
+        .container {
+          padding: 15px 10px;
+        }
+        
+        .header {
+          margin-bottom: 20px;
+        }
+        
+        .logo {
+          font-size: 18px;
         }
       }
 
@@ -100,7 +114,7 @@
         background-color: var(--white);
         border-radius: var(--border-radius);
         box-shadow: var(--box-shadow);
-        padding: 30px;
+        padding: 20px;
         transition: var(--transition);
       }
 
@@ -154,25 +168,46 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         color: var(--light);
       }
 
       .balance-amount {
-        font-size: 48px;
+        font-size: 36px;
         font-weight: 700;
         margin-bottom: 10px;
+        word-break: break-all;
       }
 
       .currency {
-        font-size: 24px;
+        font-size: 20px;
         opacity: 0.8;
       }
 
       .balance-info {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 480px) {
+        .balance-info {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        
+        .balance-item {
+          text-align: left;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        
+        .balance-item-title {
+          margin-bottom: 0;
+          margin-right: 10px;
+        }
       }
 
       .balance-item {
@@ -186,40 +221,40 @@
       }
 
       .balance-item-value {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
       }
 
       .form-title {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
         color: var(--dark);
       }
 
       .withdraw-form {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
       }
 
       .form-group {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
       }
 
       .form-label {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
         color: var(--dark);
       }
 
       .form-control {
-        padding: 14px 16px;
+        padding: 12px 14px;
         border: 1px solid #e0e0e0;
         border-radius: 8px;
-        font-size: 15px;
+        font-size: 14px;
         transition: var(--transition);
       }
 
@@ -243,15 +278,15 @@
       .form-info {
         background-color: #f8f9fa;
         border-radius: 8px;
-        padding: 16px;
-        font-size: 14px;
-        line-height: 1.6;
-        margin-top: 10px;
+        padding: 14px;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 8px;
         border-left: 4px solid var(--primary);
       }
 
       .form-info p {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
 
       .form-info p:last-child {
@@ -273,9 +308,9 @@
       }
 
       .btn {
-        padding: 14px 24px;
+        padding: 12px 20px;
         border-radius: 8px;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
         text-align: center;
         cursor: pointer;
@@ -314,14 +349,14 @@
       }
 
       .btn-lg {
-        padding: 16px 28px;
-        font-size: 18px;
+        padding: 14px 24px;
+        font-size: 16px;
       }
 
       .steps {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
       }
 
       .step {
@@ -335,8 +370,8 @@
       .step::before {
         content: "";
         position: absolute;
-        top: 24px;
-        left: calc(50% + 25px);
+        top: 20px;
+        left: calc(50% + 20px);
         height: 2px;
         background-color: #e0e0e0;
         width: 100%;
@@ -348,8 +383,8 @@
       }
 
       .step-number {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         background-color: #f0f0f0;
         color: var(--gray);
@@ -357,8 +392,8 @@
         align-items: center;
         justify-content: center;
         font-weight: 600;
-        font-size: 18px;
-        margin-bottom: 10px;
+        font-size: 16px;
+        margin-bottom: 8px;
         position: relative;
         z-index: 1;
         transition: var(--transition);
@@ -375,7 +410,7 @@
       }
 
       .step-title {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
         color: var(--gray);
         text-align: center;
@@ -389,9 +424,9 @@
 
       .footer {
         text-align: center;
-        margin-top: 60px;
+        margin-top: 40px;
         color: var(--gray);
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .footer a {
@@ -425,12 +460,12 @@
 
       .tooltip .tooltip-text {
         visibility: hidden;
-        width: 200px;
+        width: 180px;
         background-color: var(--dark);
         color: var(--white);
         text-align: center;
         border-radius: 6px;
-        padding: 10px;
+        padding: 8px;
         position: absolute;
         z-index: 1;
         bottom: 125%;
@@ -438,7 +473,7 @@
         transform: translateX(-50%);
         opacity: 0;
         transition: opacity 0.3s;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: normal;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       }
@@ -465,8 +500,8 @@
 
       /* Loading spinner */
       .spinner {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 50%;
         border-top-color: white;
@@ -482,18 +517,19 @@
       /* Toast notification */
       .toast {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 15px;
+        right: 15px;
         background-color: white;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
-        padding: 16px 20px;
+        padding: 14px 18px;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         z-index: 1000;
         transform: translateX(120%);
         transition: transform 0.3s ease;
+        max-width: 90%;
       }
 
       .toast.show {
@@ -509,8 +545,8 @@
       }
 
       .toast-icon {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
         flex-shrink: 0;
       }
 
@@ -520,12 +556,12 @@
 
       .toast-title {
         font-weight: 600;
-        font-size: 16px;
-        margin-bottom: 4px;
+        font-size: 15px;
+        margin-bottom: 3px;
       }
 
       .toast-message {
-        font-size: 14px;
+        font-size: 13px;
         color: var(--gray);
       }
 
@@ -534,7 +570,7 @@
         border: none;
         cursor: pointer;
         color: var(--gray);
-        font-size: 18px;
+        font-size: 16px;
       }
     </style>
   </head>
