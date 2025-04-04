@@ -3,25 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E99 PAYER - Dashboard</title>
-    <meta name="monetag" content="18a4805400631d6ede66478af49980f7">
-    <meta name="monetag" content="18a4805400631d6ede66478af49980f7" />
+    <title>Financial Life Changer | Withdrawal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
       :root {
-        --primary: #2e3192;
-        --secondary: #4b4ddb;
-        --accent: #ff6b6b;
-        --light: #f8f9fa;
-        --dark: #212529;
-        --success: #28a745;
-        --warning: #ffc107;
-        --info: #17a2b8;
-        --card-bg: #ffffff;
-        --body-bg: #f0f2f5;
+        --primary: #4361ee;
+        --primary-light: #4895ef;
+        --primary-dark: #3a0ca3;
+        --success: #4cc9f0;
+        --danger: #f72585;
+        --warning: #fca311;
+        --dark: #2b2d42;
+        --gray: #8d99ae;
+        --light: #edf2f4;
+        --white: #ffffff;
+        --border-radius: 12px;
+        --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
       }
 
       * {
@@ -31,147 +36,291 @@
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #e8eaf6, #c5cae9);
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
         color: var(--dark);
-        min-height: 100vh;
-        padding: 20px;
+        line-height: 1.6;
       }
 
       .container {
-        width: 100%;
-        max-width: 480px;
+        max-width: 1000px;
         margin: 0 auto;
-      }
-
-      .card {
-        background: var(--card-bg);
-        border-radius: 15px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        padding: 25px;
-        margin-bottom: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        padding: 20px 15px;
       }
 
       .header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eaedf3;
       }
 
       .logo {
-        font-size: 1.5rem;
-        font-weight: 800;
+        font-size: 20px;
+        font-weight: 700;
         color: var(--primary);
-        text-transform: uppercase;
-      }
-
-      .logo span {
-        color: var(--accent);
-      }
-
-      .profile {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
       }
 
-      .profile-avatar {
-        width: 40px;
-        height: 40px;
+      .user-welcome {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .avatar {
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
-        background-color: var(--primary);
+        background-color: var(--primary-light);
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
-        font-weight: bold;
+        font-weight: 600;
+        font-size: 14px;
       }
 
-      .profile-name {
-        font-weight: 600;
-        font-size: 1rem;
-        color: var(--dark);
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        
+        .container {
+          padding: 15px 10px;
+        }
+        
+        .header {
+          margin-bottom: 20px;
+        }
+        
+        .logo {
+          font-size: 18px;
+        }
+      }
+
+      .card {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 20px;
+        transition: var(--transition);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
       }
 
       .balance-card {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        padding: 20px;
-        border-radius: 15px;
         position: relative;
         overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
       }
 
       .balance-card::before {
         content: "";
         position: absolute;
-        width: 150px;
-        height: 150px;
-        background: rgba(255, 255, 255, 0.1);
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
-        top: -75px;
-        right: -75px;
+        background: rgba(255, 255, 255, 0.1);
+        z-index: 0;
       }
 
       .balance-card::after {
         content: "";
         position: absolute;
-        width: 100px;
-        height: 100px;
-        background: rgba(255, 255, 255, 0.1);
+        bottom: -80px;
+        left: -80px;
+        width: 300px;
+        height: 300px;
         border-radius: 50%;
-        bottom: -50px;
-        left: -50px;
+        background: rgba(255, 255, 255, 0.05);
+        z-index: 0;
       }
 
-      .balance-label {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin-bottom: 5px;
-      }
-
-      .balance-amount {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-      }
-
-      .wallet-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 1.5rem;
-        opacity: 0.8;
+      .card-content {
+        position: relative;
         z-index: 1;
       }
 
-      .action-buttons {
+      .card-title {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        color: var(--light);
+      }
+
+      .balance-amount {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        word-break: break-all;
+      }
+
+      .currency {
+        font-size: 20px;
+        opacity: 0.8;
+      }
+
+      .balance-info {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
         margin-top: 20px;
       }
 
-      .btn {
-        padding: 12px;
-        border: none;
-        border-radius: 10px;
+      @media (max-width: 480px) {
+        .balance-info {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        
+        .balance-item {
+          text-align: left;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        
+        .balance-item-title {
+          margin-bottom: 0;
+          margin-right: 10px;
+        }
+      }
+
+      .balance-item {
+        text-align: center;
+      }
+
+      .balance-item-title {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-bottom: 5px;
+      }
+
+      .balance-item-value {
+        font-size: 16px;
         font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
+      }
+
+      .form-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--dark);
+      }
+
+      .withdraw-form {
         display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--dark);
+      }
+
+      .form-control {
+        padding: 12px 14px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+      }
+
+      .form-select {
+        padding-right: 30px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238d99ae'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 20px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      .form-info {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 8px;
+        border-left: 4px solid var(--primary);
+      }
+
+      .form-info p {
+        margin-bottom: 8px;
+      }
+
+      .form-info p:last-child {
+        margin-bottom: 0;
+      }
+
+      .form-info strong {
+        color: var(--dark);
+      }
+
+      .form-info a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .form-info a:hover {
+        text-decoration: underline;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+        outline: none;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition: all 0.3s ease;
       }
 
       .btn-primary {
@@ -179,801 +328,641 @@
         color: white;
       }
 
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
       .btn-outline {
         background-color: transparent;
-        border: 2px solid var(--primary);
         color: var(--primary);
-      }
-
-      .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      .btn-primary:hover {
-        background-color: var(--secondary);
+        border: 1px solid var(--primary);
       }
 
       .btn-outline:hover {
-        background-color: rgba(46, 49, 146, 0.1);
-      }
-
-      .referral-section {
-        padding: 0;
-      }
-
-      .referral-header {
-        padding: 15px 20px;
-        background-color: #f1f3ff;
-        border-radius: 12px 12px 0 0;
-        font-weight: 600;
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .referral-content {
-        padding: 20px;
-      }
-
-      .referral-text {
-        margin-bottom: 15px;
-        font-size: 0.9rem;
-        color: #555;
-      }
-
-      .referral-bonus {
-        font-weight: 700;
-        color: var(--accent);
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .referral-link-container {
-        display: flex;
-        background-color: #f1f3f9;
-        border-radius: 8px;
-        overflow: hidden;
-        margin-bottom: 5px;
-      }
-
-      .referral-link {
-        flex: 1;
-        padding: 12px 15px;
-        font-size: 0.9rem;
-        color: #555;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .copy-btn {
-        padding: 12px 20px;
         background-color: var(--primary);
         color: white;
-        border: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s;
       }
 
-      .copy-btn:hover {
-        background-color: var(--secondary);
+      .btn-block {
+        width: 100%;
       }
 
-      .section-title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        gap: 10px;
+      .btn-lg {
+        padding: 14px 24px;
+        font-size: 16px;
       }
 
-      .activation-card {
-        background-color: #fff8e1;
-        border-left: 4px solid var(--warning);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        display: block;
-      }
-
-      .activation-message {
-        margin-bottom: 15px;
-        font-size: 0.95rem;
-        color: #664d03;
-      }
-
-      .tasks-container {
-        margin-top: 20px;
-      }
-
-      .task-list {
-        list-style: none;
-        margin-top: 15px;
-      }
-
-      .task-item {
-        background-color: white;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 10px;
+      .steps {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 25px;
+      }
+
+      .step {
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
+        width: 33.333%;
+        position: relative;
       }
 
-      .task-item:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transform: translateY(-3px);
+      .step::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: calc(50% + 20px);
+        height: 2px;
+        background-color: #e0e0e0;
+        width: 100%;
+        z-index: 0;
       }
 
-      .task-number {
-        background-color: var(--primary);
-        color: white;
-        width: 25px;
-        height: 25px;
+      .step:last-child::before {
+        display: none;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        display: inline-flex;
+        background-color: #f0f0f0;
+        color: var(--gray);
+        display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.8rem;
-        margin-right: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+        transition: var(--transition);
       }
 
-      .task-title {
-        flex: 1;
-        font-size: 0.9rem;
-      }
-
-      .task-btn {
-        padding: 8px 12px;
+      .step-active .step-number {
         background-color: var(--primary);
         color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s;
       }
 
-      .task-btn:hover {
-        background-color: var(--secondary);
-      }
-
-      .update-info {
-        font-size: 0.8rem;
-        color: #6c757d;
-        margin-top: 5px;
-        margin-bottom: 15px;
-      }
-
-      .task-reward {
-        background-color: #e8f5e9;
-        color: var(--success);
-        border-radius: 20px;
-        padding: 5px 10px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        margin-bottom: 10px;
-      }
-
-      /* Toast Styling */
-      #toast {
-        visibility: hidden;
-        min-width: 250px;
-        background: rgba(33, 37, 41, 0.85);
+      .step-completed .step-number {
+        background-color: var(--success);
         color: white;
+      }
+
+      .step-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--gray);
         text-align: center;
-        padding: 15px 20px;
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 10px;
-        z-index: 1;
-        font-size: 0.9rem;
-        backdrop-filter: blur(5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       }
 
-      #toast.show {
-        visibility: visible;
-        animation: fadein 0.5s, fadeout 0.5s 2.5s;
-      }
-
-      @keyframes fadein {
-        from {
-          bottom: 20px;
-          opacity: 0;
-        }
-        to {
-          bottom: 30px;
-          opacity: 1;
-        }
-      }
-
-      @keyframes fadeout {
-        from {
-          bottom: 30px;
-          opacity: 1;
-        }
-        to {
-          bottom: 20px;
-          opacity: 0;
-        }
+      .step-active .step-title,
+      .step-completed .step-title {
+        color: var(--dark);
+        font-weight: 600;
       }
 
       .footer {
         text-align: center;
-        margin-top: 30px;
-        margin-bottom: 20px;
-        font-size: 0.8rem;
-        color: #6c757d;
+        margin-top: 40px;
+        color: var(--gray);
+        font-size: 13px;
       }
 
-      /* Modal Styling */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 100;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        align-items: center;
-        justify-content: center;
-      }
-
-      .modal-content {
-        background-color: white;
-        border-radius: 15px;
-        padding: 25px;
-        width: 90%;
-        max-width: 400px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        text-align: center;
-      }
-
-      .modal-title {
+      .footer a {
         color: var(--primary);
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-      }
-
-      .modal-input {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 1rem;
-        margin-bottom: 15px;
-      }
-
-      .modal-actions {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-      }
-
-      .success-message {
-        color: var(--success);
-        font-weight: 600;
-        margin-top: 10px;
-      }
-
-      .error-message {
-        color: var(--accent);
-        font-weight: 600;
-        margin-top: 10px;
-      }
-
-      a {
         text-decoration: none;
+      }
+
+      /* Animations */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+        }
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 180px;
+        background-color: var(--dark);
+        color: var(--white);
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 11px;
+        font-weight: normal;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip .tooltip-text::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: var(--dark) transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* Loading spinner */
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background-color: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+        transform: translateX(120%);
+        transition: transform 0.3s ease;
+        max-width: 90%;
+      }
+
+      .toast.show {
+        transform: translateX(0);
+      }
+
+      .toast-success {
+        border-left: 4px solid var(--success);
+      }
+
+      .toast-error {
+        border-left: 4px solid var(--danger);
+      }
+
+      .toast-icon {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+      }
+
+      .toast-content {
+        flex-grow: 1;
+      }
+
+      .toast-title {
+        font-weight: 600;
+        font-size: 15px;
+        margin-bottom: 3px;
+      }
+
+      .toast-message {
+        font-size: 13px;
+        color: var(--gray);
+      }
+
+      .toast-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--gray);
+        font-size: 16px;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        <div class="logo">E99 <span>PAYER</span></div>
-        <div class="profile">
-          <div class="profile-avatar" id="avatar"></div>
-          <div class="profile-name">Hello, <span id="username">User</span></div>
+      <!-- Header Section -->
+      <header class="header">
+        <div class="logo">
+          <i class="fas fa-wallet"></i>
+          <span>E99 PAYER</span>
         </div>
-      </div>
-      <div class="card balance-card">
-        <p class="balance-label">Account Balance</p>
-        <h2 class="balance-amount">₦<span id="balance">500</span></h2>
-        <p class="balance-label">
-          Status: <span id="account-status">Inactive</span>
-        </p>
-        <i class="fas fa-wallet wallet-icon"></i>
-
-        <div class="action-buttons">
-          <button class="btn btn-primary" id="activateBtn">
-            <i class="fas fa-check-circle"></i> Activate
-          </button>
-          <button class="btn btn-outline" id="withdrawBtn">
-            <i class="fas fa-money-bill-wave"></i> Withdraw
-          </button>
-        </div>
-      </div>
-
-      <div class="card referral-section">
-        <div class="referral-header">
-          <i class="fas fa-users"></i> Referral Program
-        </div>
-        <div class="referral-content">
-          <div class="referral-bonus">
-            <i class="fas fa-gift"></i> Earn ₦250 for each registered invite
+        <div class="user-welcome">
+          <div class="avatar" id="userAvatar">U</div>
+          <div>
+            <div id="username">Welcome</div>
           </div>
-          <p class="referral-text">
-            Share your unique referral link with friends and earn when they join
-          </p>
-          <div class="referral-link-container">
-            <div class="referral-link" id="referralLink">
-              https://e99payer.com/signup?ref=
+        </div>
+      </header>
+
+      <!-- Process Steps -->
+      <div class="steps">
+        <div class="step step-active">
+          <div class="step-number">1</div>
+          <div class="step-title">Details</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-title">Verification</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-title">Confirmation</div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="grid-container">
+        <!-- Left Column - Balance Card -->
+        <div class="card balance-card">
+          <div class="card-content">
+            <div class="card-title">Current Balance</div>
+            <div class="balance-amount">₦<span id="balance">0</span></div>
+            <div class="balance-info">
+              <div class="balance-item">
+                <div class="balance-item-title">Available</div>
+                <div class="balance-item-value">
+                  ₦<span id="availableBalance">0</span>
+                </div>
+              </div>
+              <div class="balance-item">
+                <div class="balance-item-title">Charges</div>
+                <div class="balance-item-value">
+                  ₦<span id="pendingBalance">5,000</span>
+                </div>
+              </div>
+              <div class="balance-item">
+                <div class="balance-item-title">Withdrawable</div>
+                <div class="balance-item-value">
+                  ₦<span id="withdrawableBalance">0</span>
+                </div>
+              </div>
             </div>
-            <button class="copy-btn" id="copyBtn">Copy</button>
           </div>
         </div>
+
+        <!-- Right Column - Withdrawal Form -->
+        <div class="card">
+          <div class="form-title">Withdraw Funds</div>
+          <form id="withdrawForm" class="withdraw-form">
+            <div class="form-group">
+              <label class="form-label" for="withdrawalAmount">Amount</label>
+              <input
+                type="number"
+                id="withdrawalAmount"
+                class="form-control"
+                placeholder="Enter amount to withdraw"
+                required
+                min="1"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="withdrawalMethod"
+                >Withdrawal Method</label
+              >
+              <select
+                id="withdrawalMethod"
+                class="form-control form-select"
+                required
+              >
+                <option value="" disabled selected>
+                  Select withdrawal method
+                </option>
+                <option value="bank">Bank Transfer</option>
+                <option value="crypto">Cryptocurrency</option>
+              </select>
+            </div>
+
+            <!-- Bank Details (shown conditionally) -->
+            <div id="bankDetails" class="hidden">
+              <div class="form-group">
+                <label class="form-label" for="accountName">Account Name</label>
+                <input
+                  type="text"
+                  id="accountName"
+                  class="form-control"
+                  placeholder="Enter account holder name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="bankName">Bank Name</label>
+                <input
+                  type="text"
+                  id="bankName"
+                  class="form-control"
+                  placeholder="Enter bank name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="accountNumber"
+                  >Account Number</label
+                >
+                <input
+                  type="text"
+                  id="accountNumber"
+                  class="form-control"
+                  placeholder="Enter account number"
+                />
+              </div>
+            </div>
+
+            <!-- Crypto Details (shown conditionally) -->
+            <div id="cryptoDetails" class="hidden">
+              <div class="form-group">
+                <label class="form-label" for="cryptoCurrency"
+                  >Cryptocurrency</label
+                >
+                <select id="cryptoCurrency" class="form-control form-select">
+                  <option value="btc">Bitcoin (BTC)</option>
+                  <option value="eth">Ethereum (ETH)</option>
+                  <option value="usdt">Tether (USDT)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="walletAddress"
+                  >Wallet Address</label
+                >
+                <input
+                  type="text"
+                  id="walletAddress"
+                  class="form-control"
+                  placeholder="Enter wallet address"
+                />
+              </div>
+            </div>
+
+            <div class="form-info">
+              <p>
+                <strong>Important:</strong> To successfully complete your
+                withdrawal, please visit:
+                <a href="https://moniebase.onrender.com" target="_blank"
+                  >CLICK HERE</a><p>Fund your account with with the charges displaying at your
+                    balance section</p>
+              </p>
+              <!-- <p>
+                Get 5% of your balance saved in the local storage to be eligible
+                for withdrawal.
+              </p> -->
+              <p>
+                After completing this step, please
+                <a href="https://www.facebook.com/profile.php?id=61551609136459" target="_blank"
+                  >Contact Support</a
+                >
+                with a screenshot of the website you visited and your withdrawal
+                details.
+              </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+              <i class="fas fa-arrow-right"></i> Continue to Verification
+            </button>
+          </form>
+        </div>
       </div>
 
-      <div class="card activation-card" id="activationCard">
-        <p class="activation-message">
-          <i class="fas fa-exclamation-circle"></i> Activate your account to
-          start performing tasks and withdraw your earnings
+      <!-- Footer -->
+      <div class="footer">
+        <p>
+          © 2025 E99 PAYER. All rights reserved.
+          <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a>
         </p>
       </div>
-      <div class="card tasks-container">
-        <h3 class="section-title">
-          <i class="fas fa-tasks"></i> Available Tasks
-        </h3>
-        <p class="update-info">Updated on <span id="currentDate"></span></p>
-        <div class="task-reward">
-          <i class="fas fa-coins"></i> Earn ₦2,000 per completed task
-        </div>
-        <ul class="task-list" id="taskList">
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">1</span> Visit the website 1</span
-            >
-            <a
-              href="https://povaique.top/4/8683968"
-              class="task-btn"
-              data-task="facebook"
-              >Complete</a
-            >
-          </li>
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">2</span> Visit the website 2</span
-            >
-            <a
-              href="https://povaique.top/4/8683968"
-              class="task-btn"
-              data-task="twitter"
-              >Complete</a
-            >
-          </li>
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">3</span> Visit the website 3</span>
-            <a
-              href="https://povaique.top/4/8686315"
-              class="task-btn"
-              data-task="repost"
-              >Complete</a
-            >
-          </li>
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">4</span> Visit the website 4</span
-            >
-            <a
-              href="https://povaique.top/4/8686315"
-              class="task-btn"
-              data-task="youtube"
-              >Complete</a
-            >
-          </li>
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">5</span> Visit the website 5</span
-            >
-            <a href="https://povaique.top/4/8684313" class="task-btn" data-task="telegram"
-              >Complete</a
-            >
-          </li>
-        </ul>
-
-        <button class="btn btn-primary" style="width: 100%; margin-top: 15px">
-          <i class="fas fa-sync-alt"></i> Load More Tasks
-        </button>
-      </div>
-
-      <div class="footer">© 2025 E99 PAYER. All rights reserved.</div>
-
-      <div id="toast">
-        You can't perform any task because you haven't activated your account
-      </div>
     </div>
 
-    <!-- Verification Modal -->
-    <div class="modal" id="verificationModal">
-      <div class="modal-content">
-        <h3 class="modal-title">Account Verification</h3>
-        <p>Please enter the verification code to activate your account</p>
-        <input
-          type="text"
-          class="modal-input"
-          id="verificationCode"
-          placeholder="Enter verification code"
-        />
-        <div id="verificationMessage"></div>
-        <div class="modal-actions">
-          <button class="btn btn-outline" id="cancelVerification">
-            Cancel
-          </button>
-          <button class="btn btn-primary" id="submitVerification">
-            Verify
-          </button>
-          <a href="activate.html">
-            <button class="btn btn-outline" id="cancelVerification">
-              Get Code
-            </button>
-          </a>
-        </div>
+    <!-- Toast Notification (initially hidden) -->
+    <div id="toast" class="toast">
+      <div class="toast-icon">
+        <i class="fas fa-check-circle"></i>
       </div>
+      <div class="toast-content">
+        <div class="toast-title">Success</div>
+        <div class="toast-message">Your action was completed successfully.</div>
+      </div>
+      <button class="toast-close" onclick="closeToast()">×</button>
     </div>
 
-    <!-- Withdrawal Modal -->
-    <div class="modal" id="withdrawModal">
-      <div class="modal-content">
-        <h3 class="modal-title">Withdraw Funds</h3>
-        <p>Enter your banking details to withdraw funds</p>
-        <input
-          type="text"
-          class="modal-input"
-          id="accountNumber"
-          placeholder="Account Number"
-        />
-        <input
-          type="text"
-          class="modal-input"
-          id="bankName"
-          placeholder="Bank Name"
-        />
-        <div id="withdrawMessage"></div>
-        <div class="modal-actions">
-          <button class="btn btn-outline" id="cancelWithdraw">Cancel</button>
-          <button class="btn btn-primary" id="submitWithdraw">Withdraw</button>
-        </div>
-      </div>
-    </div>
-<script type='text/javascript' src='//pl26278839.effectiveratecpm.com/9a/47/e8/9a47e846cf068278f5aaf478c2d1b9ac.js'></script>
     <script>
-     // Initialize variables
-let isActivated = localStorage.getItem("isActivated") === "true";
-let balance = localStorage.getItem("balance")
-  ? parseInt(localStorage.getItem("balance"))
-  : 500;
-const username = localStorage.getItem("username") || "User";
-const correctCode = "Z45TYGDGH";
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize User Data
+        const username = localStorage.getItem("username") || "Guest";
+        const balance = parseFloat(
+          localStorage.getItem("balance") || "0"
+        ).toFixed(2);
+        const pendingBalance = (parseFloat(balance) * 0.4).toFixed(2);
+        const withdrawableBalance = (parseFloat(balance) * 1.0).toFixed(2);
 
-// Set initial values
-document.getElementById("username").innerText = username;
-document.getElementById("avatar").innerText = username
-  .charAt(0)
-  .toUpperCase();
-document.getElementById("balance").innerText = balance;
-document.getElementById(
-  "referralLink"
-).innerText = `https://url-shortener.me/DEU?ref=${username}`;
-document.getElementById("currentDate").innerText =
-  new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+        // Display User Data
+        document.getElementById(
+          "username"
+        ).textContent = `Welcome, ${username}`;
+        document.getElementById("userAvatar").textContent = username
+          .charAt(0)
+          .toUpperCase();
+        document.getElementById("balance").textContent = balance;
+        document.getElementById("availableBalance").textContent = balance;
+        document.getElementById("pendingBalance").textContent = pendingBalance;
+        document.getElementById("withdrawableBalance").textContent =
+          withdrawableBalance;
 
-// Track task completion status
-const taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
+        // Show appropriate withdrawal method details
+        document
+          .getElementById("withdrawalMethod")
+          .addEventListener("change", function () {
+            const selectedMethod = this.value;
 
-// Update UI based on activation status
-function updateActivationStatus() {
-  if (isActivated) {
-    document.getElementById("account-status").innerText = "Active";
-    document.getElementById("account-status").style.color = "#28a745";
-    document.getElementById("activationCard").style.display = "none";
-    document.getElementById("activateBtn").innerText = "Activated";
-    document.getElementById("activateBtn").disabled = true;
-    enableTasks();
-  } else {
-    document.getElementById("account-status").innerText = "Inactive";
-    disableTasks();
-  }
-}
+            // Hide all detail sections first
+            document.getElementById("bankDetails").classList.add("hidden");
+            document.getElementById("cryptoDetails").classList.add("hidden");
 
-// Enable task buttons
-function enableTasks() {
-  document.querySelectorAll(".task-btn").forEach((button) => {
-    const taskId = button.getAttribute("data-task");
-    
-    // Check if task was already completed today
-    if (wasCompletedToday(taskId)) {
-      button.innerText = "Completed";
-      button.style.backgroundColor = "#28a745";
-      button.style.pointerEvents = "none";
-    } else {
-      button.addEventListener("click", prepareTask);
-      button.style.pointerEvents = "auto";
-      button.style.opacity = "1";
-    }
-  });
-}
+            // Show the selected method's details
+            if (selectedMethod === "bank") {
+              document.getElementById("bankDetails").classList.remove("hidden");
+            } else if (selectedMethod === "crypto") {
+              document
+                .getElementById("cryptoDetails")
+                .classList.remove("hidden");
+            }
+          });
 
-// Check if task was completed today
-function wasCompletedToday(taskId) {
-  if (!taskStatus[taskId]) return false;
-  
-  const lastCompletedDate = new Date(taskStatus[taskId].lastCompleted);
-  const today = new Date();
-  
-  return lastCompletedDate.toDateString() === today.toDateString();
-}
+        // Handle withdrawal form submission
+        document
+          .getElementById("withdrawForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
 
-// Disable task buttons
-function disableTasks() {
-  document.querySelectorAll(".task-btn").forEach((button) => {
-    button.removeEventListener("click", prepareTask);
-    button.addEventListener("click", showActivationToast);
-    button.style.pointerEvents = "auto";
-    button.style.opacity = "0.5";
-  });
-}
+            const withdrawalAmount =
+              document.getElementById("withdrawalAmount").value;
+            const withdrawalMethod =
+              document.getElementById("withdrawalMethod").value;
 
-// Show toast notification
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.innerText = message;
-  toast.classList.add("show");
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 3000);
-}
+            // Basic validation
+            if (!withdrawalAmount || parseFloat(withdrawalAmount) <= 0) {
+              showToast(
+                "Error",
+                "Please enter a valid withdrawal amount",
+                "error"
+              );
+              return;
+            }
 
-// Show activation toast
-function showActivationToast(e) {
-  e.preventDefault();
-  showToast(
-    "You can't perform any task because you haven't activated your account"
-  );
-}
+            if (
+              parseFloat(withdrawalAmount) > parseFloat(withdrawableBalance)
+            ) {
+              showToast(
+                "Error",
+                "Withdrawal amount exceeds available balance",
+                "error"
+              );
+              return;
+            }
 
-// Prepare task for completion
-function prepareTask(e) {
-  // Don't prevent default here to allow navigation to the href
-  const taskId = e.target.getAttribute("data-task");
-  const taskHref = e.target.getAttribute("href");
-  
-  // Store the task ID and timestamp in localStorage to track that the user started this task
-  localStorage.setItem("pendingTaskId", taskId);
-  localStorage.setItem("pendingTaskStartTime", new Date().getTime());
-  
-  // We let the navigation happen naturally
-}
+            // Validate method-specific fields
+            let isValid = true;
 
-// Check for pending tasks on page load/return
-function checkPendingTasks() {
-  const pendingTaskId = localStorage.getItem("pendingTaskId");
-  const startTime = localStorage.getItem("pendingTaskStartTime");
-  
-  if (pendingTaskId && startTime) {
-    const now = new Date().getTime();
-    const timeDiff = now - parseInt(startTime);
-    
-    // If at least 10 seconds have passed, consider the task completed
-    // This helps ensure user actually visited the site
-    if (timeDiff > 10000) {
-      completeTask(pendingTaskId);
-    }
-    
-    // Clear pending task data
-    localStorage.removeItem("pendingTaskId");
-    localStorage.removeItem("pendingTaskStartTime");
-  }
-}
+            if (withdrawalMethod === "bank") {
+              const requiredFields = [
+                "accountName",
+                "bankName",
+                "accountNumber",
+              ];
+              requiredFields.forEach((field) => {
+                if (!document.getElementById(field).value) {
+                  isValid = false;
+                  document.getElementById(field).classList.add("is-invalid");
+                } else {
+                  document.getElementById(field).classList.remove("is-invalid");
+                }
+              });
+            } else if (withdrawalMethod === "paypal") {
+              if (!document.getElementById("paypalEmail").value) {
+                isValid = false;
+                document
+                  .getElementById("paypalEmail")
+                  .classList.add("is-invalid");
+              } else {
+                document
+                  .getElementById("paypalEmail")
+                  .classList.remove("is-invalid");
+              }
+            } else if (withdrawalMethod === "crypto") {
+              if (!document.getElementById("walletAddress").value) {
+                isValid = false;
+                document
+                  .getElementById("walletAddress")
+                  .classList.add("is-invalid");
+              } else {
+                document
+                  .getElementById("walletAddress")
+                  .classList.remove("is-invalid");
+              }
+            }
 
-// Complete task and add to balance
-function completeTask(taskId) {
-  if (!isActivated) {
-    showActivationToast();
-    return;
-  }
-  
-  // Get task button
-  const taskButton = document.querySelector(`.task-btn[data-task="${taskId}"]`);
-  
-  // Check if the task was already completed today
-  if (wasCompletedToday(taskId)) {
-    showToast("You've already completed this task today.");
-    return;
-  }
+            if (!isValid) {
+              showToast("Error", "Please fill in all required fields", "error");
+              return;
+            }
 
-  // Add 2000 to balance
-  balance += 2000;
-  document.getElementById("balance").innerText = balance;
-  localStorage.setItem("balance", balance);
+            // Process withdrawal request
+            showToast(
+              "Verification Required",
+              "Please complete the verification process as described in the instructions",
+              "success"
+            );
 
-  // Update task status
-  taskStatus[taskId] = {
-    lastCompleted: new Date().getTime(),
-    completed: true
-  };
-  localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
+            // Update step indicators
+            document
+              .querySelector(".step:nth-child(1)")
+              .classList.remove("step-active");
+            document
+              .querySelector(".step:nth-child(1)")
+              .classList.add("step-completed");
+            document
+              .querySelector(".step:nth-child(2)")
+              .classList.add("step-active");
+          });
 
-  // Mark as completed in UI
-  if (taskButton) {
-    taskButton.innerText = "Completed";
-    taskButton.style.backgroundColor = "#28a745";
-    taskButton.style.pointerEvents = "none";
-  }
+        // Apply animation to the balance card
+        const balanceCard = document.querySelector(".balance-card");
+        balanceCard.classList.add("pulse");
+      });
 
-  showToast(`Task completed! ₦2,000 added to your balance.`);
-}
+      // Toast notification functions
+      function showToast(title, message, type = "success") {
+        const toast = document.getElementById("toast");
+        const toastTitle = toast.querySelector(".toast-title");
+        const toastMessage = toast.querySelector(".toast-message");
+        const toastIcon = toast.querySelector(".toast-icon i");
 
-// Copy referral link
-document.getElementById("copyBtn").addEventListener("click", () => {
-  const referralLink = document.getElementById("referralLink").innerText;
-  navigator.clipboard
-    .writeText(referralLink)
-    .then(() => {
-      showToast("Referral link copied to clipboard!");
-      // Add ₦50 to balance
-      balance += 50;
-      document.getElementById("balance").innerText = balance;
-      localStorage.setItem("balance", balance);
-    })
-    .catch(() => {
-      showToast("Failed to copy link. Please try again.");
-    });
-});
+        // Set content
+        toastTitle.textContent = title;
+        toastMessage.textContent = message;
 
-// Show verification modal
-function showVerificationModal() {
-  document.getElementById("verificationModal").style.display = "flex";
-  document.getElementById("verificationMessage").innerText = "";
-}
+        // Set type
+        toast.className = "toast";
+        toast.classList.add(
+          type === "success" ? "toast-success" : "toast-error"
+        );
 
-// Hide verification modal
-function hideVerificationModal() {
-  document.getElementById("verificationModal").style.display = "none";
-}
+        // Set icon
+        toastIcon.className =
+          type === "success"
+            ? "fas fa-check-circle"
+            : "fas fa-exclamation-circle";
 
-// Show withdrawal modal
-function showWithdrawalModal() {
-  if (!isActivated) {
-    showToast("Unable to initiate withdrawal: Account not activated");
-    return;
-  }
-  document.getElementById("withdrawModal").style.display = "flex";
-  document.getElementById("withdrawMessage").innerText = "";
-}
+        // Show toast
+        setTimeout(() => {
+          toast.classList.add("show");
+        }, 100);
 
-// Hide withdrawal modal
-function hideWithdrawalModal() {
-  document.getElementById("withdrawModal").style.display = "none";
-}
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+          closeToast();
+        }, 5000);
+      }
 
-// Verify code
-function verifyCode() {
-  const code = document.getElementById("verificationCode").value;
-  const messageElement = document.getElementById("verificationMessage");
-
-  if (code === correctCode) {
-    messageElement.innerText =
-      "Verification successful! Account activated.";
-    messageElement.className = "success-message";
-    isActivated = true;
-    localStorage.setItem("isActivated", "true");
-    updateActivationStatus();
-    setTimeout(hideVerificationModal, 1500);
-  } else {
-    messageElement.innerText =
-      "Invalid verification code. Please try again.";
-    messageElement.className = "error-message";
-  }
-}
-
-// Process withdrawal
-function processWithdrawal() {
-  const accountNumber = document.getElementById("accountNumber").value;
-  const bankName = document.getElementById("bankName").value;
-  const messageElement = document.getElementById("withdrawMessage");
-
-  if (!accountNumber || !bankName) {
-    messageElement.innerText = "Please fill in all fields";
-    messageElement.className = "error-message";
-    return;
-  }
-
-  // Check if today is 5th or 17th
-  const today = new Date();
-  const day = today.getDate();
-
-  if (day === 5 || day === 17) {
-    messageElement.innerText =
-      "Withdrawal successful! Funds will be sent to your account.";
-    messageElement.className = "success-message";
-
-    // Reset balance
-    balance = 0;
-    document.getElementById("balance").innerText = balance;
-    localStorage.setItem("balance", balance);
-
-    setTimeout(hideWithdrawalModal, 2000);
-  } else {
-    messageElement.innerText =
-      "Withdrawal is only available on the 5th and 17th of every month.";
-    messageElement.className = "error-message";
-  }
-}
-
-// Event listeners
-document
-  .getElementById("activateBtn")
-  .addEventListener("click", showVerificationModal);
-document
-  .getElementById("withdrawBtn")
-  .addEventListener("click", showWithdrawalModal);
-document
-  .getElementById("submitVerification")
-  .addEventListener("click", verifyCode);
-document
-  .getElementById("cancelVerification")
-  .addEventListener("click", hideVerificationModal);
-document
-  .getElementById("submitWithdraw")
-  .addEventListener("click", processWithdrawal);
-document
-  .getElementById("cancelWithdraw")
-  .addEventListener("click", hideWithdrawalModal);
-
-// Show verification modal on page load if not activated
-document.addEventListener("DOMContentLoaded", () => {
-  updateActivationStatus();
-  
-  // Check for pending tasks when page loads
-  checkPendingTasks();
-  
-  if (!isActivated) {
-    setTimeout(showVerificationModal, 1000);
-  }
-});
-
-// Also check for pending tasks when the page becomes visible again
-// This handles cases where user comes back from task site
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") {
-    checkPendingTasks();
-  }
-});
+      function closeToast() {
+        const toast = document.getElementById("toast");
+        toast.classList.remove("show");
+      }
     </script>
   </body>
 </html>
