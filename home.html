@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E99 PAYER - Dashboard</title>
-    <meta name="monetag" content="18a4805400631d6ede66478af49980f7" />
-    <meta name="monetag" content="18a4805400631d6ede66478af49980f7" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -551,10 +549,10 @@
         <ul class="task-list" id="taskList">
           <li class="task-item">
             <span class="task-title"
-              ><span class="task-number">1</span> Visit the website 1</span
-            >
+              ><span class="task-number">1</span> Visit the website
+            </span>
             <a
-              href="https://povaique.top/4/8683968"
+              href="https://moniebase.onrender.com"
               class="task-btn"
               data-task="facebook"
               >Complete</a
@@ -562,10 +560,11 @@
           </li>
           <li class="task-item">
             <span class="task-title"
-              ><span class="task-number">2</span> Visit the website 2</span
+              ><span class="task-number">2</span> Click on the complete button
+              Twice</span
             >
             <a
-              href="https://povaique.top/4/8683968"
+              href="https://moniebase.onrender.com"
               class="task-btn"
               data-task="twitter"
               >Complete</a
@@ -573,10 +572,11 @@
           </li>
           <li class="task-item">
             <span class="task-title"
-              ><span class="task-number">3</span> Visit the website 3</span
+              ><span class="task-number">3</span> Like and repost on
+              Twitter</span
             >
             <a
-              href="https://povaique.top/4/8686315"
+              href="https://slushhelmetmirth.com/de2fqqri?key=b22920974b4e4680b530dfc6786b0cc8"
               class="task-btn"
               data-task="repost"
               >Complete</a
@@ -584,10 +584,10 @@
           </li>
           <li class="task-item">
             <span class="task-title"
-              ><span class="task-number">4</span> Visit the website 4</span
+              ><span class="task-number">4</span> Subscribe on YouTube</span
             >
             <a
-              href="https://povaique.top/4/8686315"
+              href="https://youtube.com/@marvexstudios?si=wqxT1_SgvB_BUg4G"
               class="task-btn"
               data-task="youtube"
               >Complete</a
@@ -595,12 +595,9 @@
           </li>
           <li class="task-item">
             <span class="task-title"
-              ><span class="task-number">5</span> Visit the website 5</span
+              ><span class="task-number">5</span> Join Telegram Group</span
             >
-            <a
-              href="https://povaique.top/4/8684313"
-              class="task-btn"
-              data-task="telegram"
+            <a href="https://t.me/opaygi" class="task-btn" data-task="telegram"
               >Complete</a
             >
           </li>
@@ -670,35 +667,21 @@
         </div>
       </div>
     </div>
-    <script
-      type="text/javascript"
-      src="//pl26278839.effectiveratecpm.com/9a/47/e8/9a47e846cf068278f5aaf478c2d1b9ac.js"
-    ></script>
+
     <script>
       // Initialize variables
       let isActivated = localStorage.getItem("isActivated") === "true";
       let balance = localStorage.getItem("balance")
         ? parseInt(localStorage.getItem("balance"))
-        : 500;
+        : 20000;
       const username = localStorage.getItem("username") || "User";
-      const correctCode = "Z45TYGDGH";
+      const correctCode = "bgedhugt7s";
 
-      // Set initial values with special balances for specific users
+      // Set initial values
       document.getElementById("username").innerText = username;
       document.getElementById("avatar").innerText = username
         .charAt(0)
         .toUpperCase();
-
-      // Set special balances for specific users if account is activated
-      if (isActivated) {
-        if (username === "Pgbomo") {
-          balance = 56800;
-        } else if (username === "DaveedBoy") {
-          balance = 70550;
-        }
-        localStorage.setItem("balance", balance);
-      }
-
       document.getElementById("balance").innerText = balance;
       document.getElementById(
         "referralLink"
@@ -710,11 +693,8 @@
           day: "numeric",
         });
 
-      // Track task completion status and last task refresh time
+      // Track task completion status
       const taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
-      let lastTaskRefresh = localStorage.getItem("lastTaskRefresh")
-        ? parseInt(localStorage.getItem("lastTaskRefresh"))
-        : 0;
 
       // Update UI based on activation status
       function updateActivationStatus() {
@@ -725,47 +705,10 @@
           document.getElementById("activateBtn").innerText = "Activated";
           document.getElementById("activateBtn").disabled = true;
           enableTasks();
-
-          // Check if we need to refresh tasks
-          checkTaskRefresh();
         } else {
           document.getElementById("account-status").innerText = "Inactive";
           disableTasks();
         }
-      }
-
-      // Check if we need to refresh tasks (every 30 minutes)
-      function checkTaskRefresh() {
-        const now = new Date().getTime();
-        const thirtyMinutes = 30 * 60 * 1000; // 30 minutes in milliseconds
-
-        if (now - lastTaskRefresh > thirtyMinutes) {
-          refreshTasks();
-          lastTaskRefresh = now;
-          localStorage.setItem("lastTaskRefresh", lastTaskRefresh);
-        }
-      }
-
-      // Refresh all tasks (mark them as available again)
-      function refreshTasks() {
-        const taskButtons = document.querySelectorAll(".task-btn");
-
-        taskButtons.forEach((button) => {
-          const taskId = button.getAttribute("data-task");
-          button.innerText = "Complete";
-          button.style.backgroundColor = "";
-          button.style.pointerEvents = "auto";
-
-          // Remove the task from completed status
-          if (taskStatus[taskId]) {
-            delete taskStatus[taskId];
-          }
-        });
-
-        localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
-        showToast(
-          "New tasks have been refreshed! You can complete them again."
-        );
       }
 
       // Enable task buttons
@@ -773,8 +716,8 @@
         document.querySelectorAll(".task-btn").forEach((button) => {
           const taskId = button.getAttribute("data-task");
 
-          // Check if task was already completed in current session
-          if (taskStatus[taskId] && taskStatus[taskId].completed) {
+          // Check if task was already completed today
+          if (wasCompletedToday(taskId)) {
             button.innerText = "Completed";
             button.style.backgroundColor = "#28a745";
             button.style.pointerEvents = "none";
@@ -784,10 +727,16 @@
             button.style.opacity = "1";
           }
         });
+      }
 
-        // Update task reward display
-        document.querySelector(".task-reward").innerHTML =
-          '<i class="fas fa-coins"></i> Earn ₦800 per completed task';
+      // Check if task was completed today
+      function wasCompletedToday(taskId) {
+        if (!taskStatus[taskId]) return false;
+
+        const lastCompletedDate = new Date(taskStatus[taskId].lastCompleted);
+        const today = new Date();
+
+        return lastCompletedDate.toDateString() === today.toDateString();
       }
 
       // Disable task buttons
@@ -841,6 +790,7 @@
           const timeDiff = now - parseInt(startTime);
 
           // If at least 10 seconds have passed, consider the task completed
+          // This helps ensure user actually visited the site
           if (timeDiff > 10000) {
             completeTask(pendingTaskId);
           }
@@ -863,16 +813,14 @@
           `.task-btn[data-task="${taskId}"]`
         );
 
-        // Check if the task was already completed in current session
-        if (taskStatus[taskId] && taskStatus[taskId].completed) {
-          showToast(
-            "You've already completed this task. New tasks will be available after 30 minutes."
-          );
+        // Check if the task was already completed today
+        if (wasCompletedToday(taskId)) {
+          showToast("You've already completed this task today.");
           return;
         }
 
-        // Add 800 to balance
-        balance += 800;
+        // Add 2000 to balance
+        balance += 2000;
         document.getElementById("balance").innerText = balance;
         localStorage.setItem("balance", balance);
 
@@ -890,7 +838,7 @@
           taskButton.style.pointerEvents = "none";
         }
 
-        showToast(`Task completed! ₦800 added to your balance.`);
+        showToast(`Task completed! ₦2,000 added to your balance.`);
       }
 
       // Copy referral link
@@ -947,19 +895,6 @@
           messageElement.className = "success-message";
           isActivated = true;
           localStorage.setItem("isActivated", "true");
-
-          // Set special balances for specific users upon activation
-          if (username === "Pgbomo") {
-            balance = 56800;
-          } else if (username === "DaveedBoy") {
-            balance = 70550;
-          } else {
-            balance = 500; // Default balance for other users
-          }
-
-          document.getElementById("balance").innerText = balance;
-          localStorage.setItem("balance", balance);
-
           updateActivationStatus();
           setTimeout(hideVerificationModal, 1500);
         } else {
@@ -969,7 +904,7 @@
         }
       }
 
-      // Process withdrawal - UPDATED TO REDIRECT INSTEAD OF RESETTING BALANCE
+      // Process withdrawal
       function processWithdrawal() {
         const accountNumber = document.getElementById("accountNumber").value;
         const bankName = document.getElementById("bankName").value;
@@ -981,16 +916,24 @@
           return;
         }
 
-        // Check if today is 6th or 17th
+        // Check if today is 5th or 17th
         const today = new Date();
         const day = today.getDate();
 
         if (day === 5 || day === 17) {
-          // Instead of resetting balance, redirect to the specified URL
-          window.location.href = "https://tinyurl.com/E99payer001";
+          messageElement.innerText =
+            "Withdrawal successful! Funds will be sent to your account.";
+          messageElement.className = "success-message";
+
+          // Reset balance
+          balance = 0;
+          document.getElementById("balance").innerText = balance;
+          localStorage.setItem("balance", balance);
+
+          setTimeout(hideWithdrawalModal, 2000);
         } else {
           messageElement.innerText =
-            "Withdrawal is only available on the 6th and 17th of every month.";
+            "Withdrawal is only available on the 5th and 17th of every month.";
           messageElement.className = "error-message";
         }
       }
@@ -1028,6 +971,7 @@
       });
 
       // Also check for pending tasks when the page becomes visible again
+      // This handles cases where user comes back from task site
       document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") {
           checkPendingTasks();
