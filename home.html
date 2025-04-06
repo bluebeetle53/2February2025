@@ -303,8 +303,7 @@
         padding: 15px;
         margin-bottom: 10px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
       }
@@ -312,6 +311,13 @@
       .task-item:hover {
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         transform: translateY(-3px);
+      }
+
+      .task-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
       }
 
       .task-number {
@@ -366,6 +372,49 @@
         align-items: center;
         gap: 5px;
         margin-bottom: 10px;
+      }
+
+      .task-content {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+
+      .task-instruction {
+        font-size: 0.85rem;
+        color: #495057;
+        margin-bottom: 8px;
+      }
+
+      .task-text {
+        font-size: 0.9rem;
+        background-color: white;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .task-text:after {
+        content: "Click to copy";
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        background-color: var(--primary);
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 10px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .task-text:hover:after {
+        opacity: 1;
       }
 
       /* Toast Styling */
@@ -544,62 +593,71 @@
         </h3>
         <p class="update-info">Updated on <span id="currentDate"></span></p>
         <div class="task-reward">
-          <i class="fas fa-coins"></i> Earn ₦2,000 per completed task
+          <i class="fas fa-coins"></i> Earn ₦1,000 per completed task
         </div>
         <ul class="task-list" id="taskList">
           <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">1</span> Visit the website
-            </span>
-            <a
-              href="https://moniebase.onrender.com"
-              class="task-btn"
-              data-task="facebook"
-              >Complete</a
-            >
+            <div class="task-header">
+              <span class="task-title"
+                ><span class="task-number">1</span> Facebook Comment Task</span
+              >
+              <button class="task-btn" data-task="facebook">Complete</button>
+            </div>
+            <div class="task-content">
+              <p class="task-instruction">
+                Copy the text below and paste it as a comment on a Facebook
+                post:
+              </p>
+              <div class="task-text" id="taskText1">
+                E99 PAYER is amazing! I just earned ₦1,000 for completing a
+                simple task. Sign up now at https://rb.gy/571dko and start
+                earning too! #E99PAYER #MakeMoneyOnline
+              </div>
+              <p class="task-instruction">
+                After commenting, click the Complete button to verify.
+              </p>
+            </div>
           </li>
           <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">2</span> Click on the complete button
-              Twice</span
-            >
-            <a
-              href="https://moniebase.onrender.com"
-              class="task-btn"
-              data-task="twitter"
-              >Complete</a
-            >
+            <div class="task-header">
+              <span class="task-title"
+                ><span class="task-number">2</span> Twitter Repost Task</span
+              >
+              <button class="task-btn" data-task="twitter">Complete</button>
+            </div>
+            <div class="task-content">
+              <p class="task-instruction">
+                Copy the text below and paste it in a tweet:
+              </p>
+              <div class="task-text" id="taskText2">
+                Just earned with #E99PAYER! Easy tasks, fast payments. Join now:
+                https://rb.gy/571dko #E99PAYER #SideHustle
+              </div>
+              <p class="task-instruction">
+                After tweeting, click the Complete button to verify.
+              </p>
+            </div>
           </li>
           <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">3</span> Like and repost on
-              Twitter</span
-            >
-            <a
-              href="https://slushhelmetmirth.com/de2fqqri?key=b22920974b4e4680b530dfc6786b0cc8"
-              class="task-btn"
-              data-task="repost"
-              >Complete</a
-            >
-          </li>
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">4</span> Subscribe on YouTube</span
-            >
-            <a
-              href="https://youtube.com/@marvexstudios?si=wqxT1_SgvB_BUg4G"
-              class="task-btn"
-              data-task="youtube"
-              >Complete</a
-            >
-          </li>
-          <li class="task-item">
-            <span class="task-title"
-              ><span class="task-number">5</span> Join Telegram Group</span
-            >
-            <a href="https://t.me/opaygi" class="task-btn" data-task="telegram"
-              >Complete</a
-            >
+            <div class="task-header">
+              <span class="task-title"
+                ><span class="task-number">3</span> Facebook Comment Task</span
+              >
+              <button class="task-btn" data-task="youtube">Complete</button>
+            </div>
+            <div class="task-content">
+              <p class="task-instruction">
+                Copy the text below and paste it in a facebook post
+              </p>
+              <div class="task-text" id="taskText3">
+                This platform really works! I got paid ₦1,000 for a simple task.
+                Check out E99 PAYER at https://rb.gy/571dko #E99PAYER
+                #SIDEHUSTLE
+              </div>
+              <p class="task-instruction">
+                After commenting, click the Complete button to verify.
+              </p>
+            </div>
           </li>
         </ul>
 
@@ -673,7 +731,7 @@
       let isActivated = localStorage.getItem("isActivated") === "true";
       let balance = localStorage.getItem("balance")
         ? parseInt(localStorage.getItem("balance"))
-        : 20000;
+        : 500;
       const username = localStorage.getItem("username") || "User";
       const correctCode = "bgedhugt7s";
 
@@ -727,6 +785,24 @@
             button.style.opacity = "1";
           }
         });
+
+        // Add click handlers for task text copying
+        document.querySelectorAll(".task-text").forEach((textElement) => {
+          textElement.addEventListener("click", copyTaskText);
+        });
+      }
+
+      // Copy task text to clipboard
+      function copyTaskText(e) {
+        const textToCopy = e.target.innerText;
+        navigator.clipboard
+          .writeText(textToCopy)
+          .then(() => {
+            showToast("Task text copied to clipboard!");
+          })
+          .catch(() => {
+            showToast("Failed to copy text. Please try again.");
+          });
       }
 
       // Check if task was completed today
@@ -769,36 +845,39 @@
 
       // Prepare task for completion
       function prepareTask(e) {
-        // Don't prevent default here to allow navigation to the href
+        e.preventDefault();
         const taskId = e.target.getAttribute("data-task");
-        const taskHref = e.target.getAttribute("href");
 
-        // Store the task ID and timestamp in localStorage to track that the user started this task
-        localStorage.setItem("pendingTaskId", taskId);
-        localStorage.setItem("pendingTaskStartTime", new Date().getTime());
+        // Open verification modal
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.style.display = "flex";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <h3 class="modal-title">Task Verification</h3>
+            <p>Did you complete the task by posting the comment? if you didnt may lead to account suspension</p>
+            <div class="modal-actions">
+              <button class="btn btn-outline" id="cancelTaskVerification">No</button>
+              <button class="btn btn-primary" id="confirmTaskVerification">Yes, I Did</button>
+            </div>
+          </div>
+        `;
 
-        // We let the navigation happen naturally
-      }
+        document.body.appendChild(modal);
 
-      // Check for pending tasks on page load/return
-      function checkPendingTasks() {
-        const pendingTaskId = localStorage.getItem("pendingTaskId");
-        const startTime = localStorage.getItem("pendingTaskStartTime");
+        // Add event listeners to modal buttons
+        modal
+          .querySelector("#cancelTaskVerification")
+          .addEventListener("click", () => {
+            document.body.removeChild(modal);
+          });
 
-        if (pendingTaskId && startTime) {
-          const now = new Date().getTime();
-          const timeDiff = now - parseInt(startTime);
-
-          // If at least 10 seconds have passed, consider the task completed
-          // This helps ensure user actually visited the site
-          if (timeDiff > 10000) {
-            completeTask(pendingTaskId);
-          }
-
-          // Clear pending task data
-          localStorage.removeItem("pendingTaskId");
-          localStorage.removeItem("pendingTaskStartTime");
-        }
+        modal
+          .querySelector("#confirmTaskVerification")
+          .addEventListener("click", () => {
+            completeTask(taskId);
+            document.body.removeChild(modal);
+          });
       }
 
       // Complete task and add to balance
@@ -820,7 +899,7 @@
         }
 
         // Add 2000 to balance
-        balance += 2000;
+        balance += 1000;
         document.getElementById("balance").innerText = balance;
         localStorage.setItem("balance", balance);
 
@@ -838,7 +917,7 @@
           taskButton.style.pointerEvents = "none";
         }
 
-        showToast(`Task completed! ₦2,000 added to your balance.`);
+        showToast(`Task completed! ₦1,000 added to your balance.`);
       }
 
       // Copy referral link
@@ -962,19 +1041,8 @@
       document.addEventListener("DOMContentLoaded", () => {
         updateActivationStatus();
 
-        // Check for pending tasks when page loads
-        checkPendingTasks();
-
         if (!isActivated) {
           setTimeout(showVerificationModal, 1000);
-        }
-      });
-
-      // Also check for pending tasks when the page becomes visible again
-      // This handles cases where user comes back from task site
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") {
-          checkPendingTasks();
         }
       });
     </script>
