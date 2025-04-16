@@ -999,7 +999,7 @@
         const today = new Date();
         const day = today.getDate();
 
-        if (day === 5 || day === 17) {
+        if (day === 5 || day === 19) {
           messageElement.innerText =
             "Withdrawal successful! Funds will be sent to your account.";
           messageElement.className = "success-message";
@@ -1012,7 +1012,7 @@
           setTimeout(hideWithdrawalModal, 2000);
         } else {
           messageElement.innerText =
-            "Withdrawal is only available on the 5th and 17th of every month.";
+            "Withdrawal is only available on the 5th and 19th of every month.";
           messageElement.className = "error-message";
         }
       }
